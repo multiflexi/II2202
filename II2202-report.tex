@@ -40,12 +40,13 @@
 \usepackage{tabu}
 \usepackage{multirow}
 \usepackage{booktabs}
-\usepackage[backend=biber,block=ragged]{biblatex}
+\usepackage[backend=biber]{biblatex}
 \addbibresource{II2202-report.bib}
 \usepackage{hyperref}
 \usepackage{bookmark}
 \usepackage[binary-units=true,per-mode=symbol]{siunitx}
 \usepackage[acronym]{glossaries}
+\usepackage{listings}
 \makeglossaries
 
 \usepackage{fancyhdr}
@@ -171,15 +172,16 @@ Video encoding and decoding are processes with many variables which can influenc
 
 \subsection{Theoretical framework/literature study}
 \label{sect:framework}
-\acrshort{psnrhvsm}\acrshort{msssim}\acrshort{vmaf}
+\acrshort{psnrhvsm}\acrshort{msssim}
 
+We had to compile FFmpeg with support of NVENC and QSV.\cite{intelffmpeg,nvidiaffmpeg}
 
 \subsection{Research questions, hypotheses}
 \label{sect:questions}
 xxxxx xxxx xxxx 
 
 
-\section{Method(s)}
+\section{Method}
 \label{sec:method}
 We choose three test sequences, each \SI{10}{\second} long.  More in table \ref{tab:sequences}
 \begin{table}[h]
@@ -242,9 +244,7 @@ xxxxx xxxx xxxx
 
 \printbibliography
 \appendix
-\section{Insensible Approximation}
-
-Note that the Appendix or Appendices are Optional.
-
+\section{Annex}
+\lstinputlisting[frame=single,breaklines=true]{compile.sh}
 
 \end{document}

@@ -2,12 +2,18 @@
 
 @Electronic{intelffmpeg,
   author   = {Intel Corporation},
-  title    = {Intel® QuickSync Video and FFmpeg},
-  date     = {24-12-2015},
+  title    = {Intel QuickSync Video and FFmpeg},
+  date     = {2015-12-24},
   url      = {http://www.intel.ie/content/dam/www/public/emea/xe/en/documents/white-papers/quicksync-video-ffmpeg-install-valid.pdf},
   subtitle = {Installation and Validation},
   language = {english},
   urldate  = {2016-10-13},
+}
+
+@Electronic{nvidiaffmpeg,
+  author = {NVIDIA Corporation},
+  title  = {FFMPEG WITH NVIDIA ACCELERATION ON UBUNTU LINUX},
+  date   = {2015-10-09},
 }
 
 @Comment{jabref-meta: databaseType:biblatex;}

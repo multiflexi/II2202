@@ -16,5 +16,68 @@
   {}
 \endgroup
 
+
+\refsection{0}
+  \sortlist[entry]{nty/global}
+    \entry{intelffmpeg}{online}{}
+      \name{author}{1}{}{%
+        {{hash=42af28f239d9ce2a4d0f9a032741150e}{%
+           family={Corporation},
+           family_i={C\bibinitperiod},
+           given={Intel},
+           given_i={I\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{42af28f239d9ce2a4d0f9a032741150e}
+      \strng{fullhash}{42af28f239d9ce2a4d0f9a032741150e}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{24}
+      \field{month}{12}
+      \field{subtitle}{Installation and Validation}
+      \field{title}{Intel QuickSync Video and FFmpeg}
+      \field{urlday}{13}
+      \field{urlmonth}{10}
+      \field{urlyear}{2016}
+      \field{year}{2015}
+      \verb{url}
+      \verb http://www.intel.ie/content/dam/www/public/emea/xe/en/documents/white-papers/quicksync-video-ffmpeg-install-valid.pdf
+      \endverb
+    \endentry
+    \entry{nvidiaffmpeg}{online}{}
+      \name{author}{1}{}{%
+        {{hash=61a23953300b78e83f381e02ca45c5e4}{%
+           family={Corporation},
+           family_i={C\bibinitperiod},
+           given={NVIDIA},
+           given_i={N\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {english}%
+      }
+      \strng{namehash}{61a23953300b78e83f381e02ca45c5e4}
+      \strng{fullhash}{61a23953300b78e83f381e02ca45c5e4}
+      \field{sortinit}{C}
+      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{day}{09}
+      \field{month}{10}
+      \field{subtitle}{Installation and User Guide}
+      \field{title}{FFMPEG WITH NVIDIA ACCELERATION ON UBUNTU LINUX}
+      \field{urlday}{13}
+      \field{urlmonth}{10}
+      \field{urlyear}{2016}
+      \field{year}{2015}
+      \verb{url}
+      \verb http://developer.download.nvidia.com/compute/redist/ffmpeg/1511-patch/FFMPEG-with-NVIDIA-Acceleration-on-Ubuntu_UG_v01.pdf
+      \endverb
+    \endentry
+  \endsortlist
+\endrefsection
 \endinput
 
