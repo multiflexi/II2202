@@ -1,0 +1,120 @@
+\ifglsentryexists{msssim}{}%
+{%
+\gls@defglossaryentry{msssim}%
+{%
+name={MS-SSIM},%
+sort={MS-SSIM},%
+type={acronym},%
+first={Multi-Scale Structural Similarity.\glsspace (MS-SSIM)},%
+firstplural={Multi-Scale Structural Similarity.s\glsspace (MS-SSIMs)},%
+text={MS-SSIM},%
+plural={MS-SSIMs},%
+description={Multi-Scale Structural Similarity.},%
+descriptionplural={Multi-Scale Structural Similarity.\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Multi-Scale Structural Similarity.},%
+longplural={Multi-Scale Structural Similarity.s},%
+short={MS-SSIM},%
+shortplural={MS-SSIMs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{psnrhvsm}{}%
+{%
+\gls@defglossaryentry{psnrhvsm}%
+{%
+name={PSNR-HVS-M},%
+sort={PSNR-HVS-M},%
+type={acronym},%
+first={Peak Signal-to-Noise Ratio taking into account Contrast Sensitivity Function (CSF) and between-coefficient contrast masking of DCT basis functions.\glsspace (PSNR-HVS-M)},%
+firstplural={Peak Signal-to-Noise Ratio taking into account Contrast Sensitivity Function (CSF) and between-coefficient contrast masking of DCT basis functions.s\glsspace (PSNR-HVS-Ms)},%
+text={PSNR-HVS-M},%
+plural={PSNR-HVS-Ms},%
+description={Peak Signal-to-Noise Ratio taking into account Contrast Sensitivity Function (CSF) and between-coefficient contrast masking of DCT basis functions.},%
+descriptionplural={Peak Signal-to-Noise Ratio taking into account Contrast Sensitivity Function (CSF) and between-coefficient contrast masking of DCT basis functions.\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Peak Signal-to-Noise Ratio taking into account Contrast Sensitivity Function (CSF) and between-coefficient contrast masking of DCT basis functions.},%
+longplural={Peak Signal-to-Noise Ratio taking into account Contrast Sensitivity Function (CSF) and between-coefficient contrast masking of DCT basis functions.s},%
+short={PSNR-HVS-M},%
+shortplural={PSNR-HVS-Ms},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{vmaf}{}%
+{%
+\gls@defglossaryentry{vmaf}%
+{%
+name={VMAF},%
+sort={VMAF},%
+type={acronym},%
+first={Video Multi-Method Assessment Fusion\glsspace (VMAF)},%
+firstplural={Video Multi-Method Assessment Fusions\glsspace (VMAFs)},%
+text={VMAF},%
+plural={VMAFs},%
+description={Video Multi-Method Assessment Fusion},%
+descriptionplural={Video Multi-Method Assessment Fusion\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Video Multi-Method Assessment Fusion},%
+longplural={Video Multi-Method Assessment Fusions},%
+short={VMAF},%
+shortplural={VMAFs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
+\ifglsentryexists{vqmt}{}%
+{%
+\gls@defglossaryentry{vqmt}%
+{%
+name={VQMT},%
+sort={VQMT},%
+type={acronym},%
+first={Video Quality Measurement Tool\glsspace (VQMT)},%
+firstplural={Video Quality Measurement Tools\glsspace (VQMTs)},%
+text={VQMT},%
+plural={VQMTs},%
+description={Video Quality Measurement Tool},%
+descriptionplural={Video Quality Measurement Tool\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={Video Quality Measurement Tool},%
+longplural={Video Quality Measurement Tools},%
+short={VQMT},%
+shortplural={VQMTs},%
+counter={page},%
+parent={},%
+%
+}%
+}%
