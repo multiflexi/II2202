@@ -1,13 +1,20 @@
-\title{Something Something Huge Impact}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% template for II2202 report
+%% original 2015.11.24
+%% revised  2016.08.23
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+\title{Comparison of software and hardware video codecs from perspective of power consumption}
 \author{
         \textsc{Jaroslav Svoboda}
             \qquad
-        \textsc{Michele Maffei}
+        \textsc{Michel Muffei}
         \mbox{}\\
         \normalsize
             \texttt{svoboda}
         \textbar{}
-            \texttt{mmaffei}
+            \texttt{mmuffei}
         \normalsize
             \texttt{@kth.se}
 }
@@ -22,11 +29,24 @@
 %\usepackage[T1]{fontenc}
 %%\usepackage{pslatex}
 \renewcommand{\rmdefault}{ptm} 
+\usepackage[utf8]{inputenc}
 \usepackage{mathptmx}
 \usepackage[scaled=.90]{helvet}
 \usepackage{courier}
-%
+\usepackage[swedish,UKenglish]{babel}
+\usepackage[gen]{eurosym}
+\usepackage[UKenglish]{isodate}
+\usepackage{selinput}
+\usepackage{tabu}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage[backend=biber,block=ragged]{biblatex}
+\addbibresource{references.bib}
+\usepackage{hyperref}
+\addbibresource{references.bib}
 \usepackage{bookmark}
+\usepackage[acronym]{glossaries}
+\makeglossaries
 
 \usepackage{fancyhdr}
 \pagestyle{fancy}
@@ -41,19 +61,15 @@
 %% \usepackage{pgfmath}	% --math engine
 %%----------------------------------------------------------------------------
 %% \usepackage[latin1]{inputenc}
-\usepackage[utf8]{inputenc} % inputenc allows the user to input accented characters directly from the keyboard
-\usepackage[swedish,english]{babel}
+ % inputenc allows the user to input accented characters directly from the keyboard
+
 %% \usepackage{rotating}		 %% For text rotating
 \usepackage{array}			 %% For table wrapping
 \usepackage{graphicx}	                 %% Support for images
 \usepackage{float}			 %% Suppor for more flexible floating box positioning
 \usepackage{color}                       %% Support for colour 
 \usepackage{mdwlist}
-%% \usepackage{setspace}                 %% For fine-grained control over line spacing
-%% \usepackage{listings}		 %% For source code listing
-%% \usepackage{bytefield}                %% For packet drawings
-\usepackage{tabularx}		         %% For simple table stretching
-%%\usepackage{multirow}	                 %% Support for multirow colums in tables
+
 \usepackage{dcolumn}	                 %% Support for decimal point alignment in tables
 \usepackage{url}	                 %% Support for breaking URLs
 \usepackage[perpage,para,symbol]{footmisc} %% use symbols to ``number'' footnotes and reset which symbol is used first on each page
@@ -137,37 +153,26 @@ Your abstract here.
 \end{abstract}
 %%\clearpage
 
-\selectlanguage{english}
+
 \tableofcontents
+\newacronym{msssim}{MS-SSIM}{Multi-Scale Structural Similarity}
+\newacronym{psnrhvsm}{PSNR-HVS-M}{Peak Signal-to-Noise Ratio taking into account Contrast Sensitivity Function (CSF) and between-coefficient contrast masking of DCT basis functions}
+\newacronym{vmaf}{VMAF}{Video Multi-Method Assessment Fusion}
+\newacronym{vqmt}{VQMT}{Video Quality Measurement Tool}
+\printglossary[type=\acronymtype]
 
-\section*{List of Acronyms and Abbreviations}
-\label{list-of-acronyms-and-abbreviations}
-
-This document requires readers to be familiar with terms and concepts described in \mbox{RFC~1235} \cite{john_ioannidis_coherent_1991}. For clarity we summarize some of these terms and give a short description of them before presenting them in next sections.
-
-\begin{basedescript}{\desclabelstyle{\pushlabel}\desclabelwidth{10em}}
-\item[IPv4]					Internet Protocol version 4 (RFC~791 \cite{postel_internet_1981})
-\item[IPv6]					Internet Protocol version 6 (RFC~2460 \cite{deering_internet_1998})
-\end{basedescript}
 
 
 \clearpage
 \section{Introduction}
 \label{sect:introduction}
-%% Longer problem statement
-%% General introduction to the area
+Video encoding and decoding are processes with many variables which can influence the output of whole process of video transfer. Visual quality of video is determined by chosen coding standard, its implementation and encoding settings. All these three key elements have direct impact on energy resources we need for completing encode. Video coding standard defines complexity of algorithm and usually the more effective compression the more complex algorithm - the more power demanding. There are many types of implementations but usually the more hardwired algorithms it uses the less power demanding it is. At last, used encoding settings determine time needed for compression. That also means power necessary for encode. From this point of view, power consumption one, it is interesting to create comparison of different video codecs to see how much quality of video costs in used energy.
 
-It was conjectured in \cite{john_ioannidis_coherent_1991} that multicasting
-could provide gains by \ldots.
-
-See also \cite{a_new_synchronization_protocol_for_sqlite_databases},
-the paper \cite{anand_kannan_n-ary_2012}, 
-and the book \cite{brent_s._baxter_standard_1982}.
 
 \subsection{Theoretical framework/literature study}
 \label{sect:framework}
+\acrshort{psnrhvsm}\acrshort{msssim}
 
-xxxxx xxxx xxxx 
 
 \subsection{Research questions, hypotheses}
 \label{sect:questions}
@@ -177,9 +182,14 @@ xxxxx xxxx xxxx
 
 \section{Method(s)}
 \label{sec:method}
-
-xxxxx xxxx xxxx 
-
+Comparison is done for all codecs as follows:
+\begin{enumerate}
+	\item Power measuring tools are enabled
+	\item Encoding proceeds
+	\item Power measuring tools are disabled
+	\item Encoded video is trans-coded to YUV420P
+	\item Quality is measured by \acrshort{vmaf} and \acrshort{vqmt}
+\end{enumerate}
 \section{Results and Analysis}
 \label{sec:results}
 
@@ -189,9 +199,7 @@ xxxxx xxxx xxxx
 \label{sec:discussion}
 xxxxx xxxx xxxx 
 
-\bibliography{II2202-report}
-%%\bibliographystyle{IEEEtran}
-\bibliographystyle{myIEEEtran}
+\printbibliography
 \appendix
 \section{Insensible Approximation}
 
