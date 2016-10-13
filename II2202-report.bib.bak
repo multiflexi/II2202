@@ -2,7 +2,7 @@
 
 @Electronic{intelffmpeg,
   author   = {Intel Corporation},
-  title    = {Intel QuickSync Video and FFmpeg},
+  title    = {Intel® QuickSync Video and FFmpeg},
   date     = {24-12-2015},
   url      = {http://www.intel.ie/content/dam/www/public/emea/xe/en/documents/white-papers/quicksync-video-ffmpeg-install-valid.pdf},
   subtitle = {Installation and Validation},
