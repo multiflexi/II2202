@@ -44,6 +44,7 @@
 \addbibresource{II2202-report.bib}
 \usepackage{hyperref}
 \usepackage{bookmark}
+\usepackage[binary-units=true,per-mode=symbol]{siunitx}
 \usepackage[acronym]{glossaries}
 \makeglossaries
 
@@ -170,26 +171,66 @@ Video encoding and decoding are processes with many variables which can influenc
 
 \subsection{Theoretical framework/literature study}
 \label{sect:framework}
-\acrshort{psnrhvsm}\acrshort{msssim}
+\acrshort{psnrhvsm}\acrshort{msssim}\acrshort{vmaf}
 
 
 \subsection{Research questions, hypotheses}
 \label{sect:questions}
-
 xxxxx xxxx xxxx 
 
 
 \section{Method(s)}
 \label{sec:method}
-Comparison is done for all codecs as follows:
+We choose three test sequences, each \SI{10}{\second} long.  More in table \ref{tab:sequences}
+\begin{table}[h]
+	\centering
+	\caption{Parameters of test sequences}
+	\label{tab:sequences}
+	\begin{tabu}{lrrr}
+		\toprule[2pt]
+		Sequence     & crowd\_run\_2160p50.y4m & old\_town\_cross\_2160p50.y4m & sintel.y4m \\
+		\midrule
+		Resolution   & $3840\times2160$               & $3840\times2160$                     & $4096\times1744$  \\
+		framerate    & $50$p                     & $50$p                           & $24$p        \\
+		\# of frames & $500$                     & $500$                           & $240$        \\
+		subsampling & $4:2:0$	&	$4:2:0$	&	$4:2:0$ \\
+		size in bytes         & $6220803036$     & $6220803036$                 &          \\
+		\bottomrule[2pt]  
+	\end{tabu}
+\end{table}
+
+Whole process was done for all codecs as follows:
 \begin{enumerate}
-	\item Power measuring tools are enabled
+	\item Power measuring tools NVIDIA System Management Interface and Intel Power Gadget are enabled
 	\item Encoding proceeds
 	\item Power measuring tools are disabled
 	\item Encoded video is trans-coded to YUV420P
 	\item Quality is measured by \acrshort{vmaf} and \acrshort{vqmt}
 \end{enumerate}
-This is done for all three chosen sequences, all chosen codecs and all presets
+This is done for all three chosen sequences, all chosen codecs and all presets available in bit-rates from \textsc{\SI{500}{\kilo\bit\per\second}} to \SI{15000}{\kilo\bit\per\second} with \SI{500}{\kilo\bit} steps. Total number of encodes is xx.
+Information about used software are in table \ref{tab:sw}.
+\begin{table}[]
+	\centering
+	\caption{Used software}
+	\label{tab:sw}
+	\begin{tabu}{llll}
+		\toprule[2pt]
+		Name                               & Version &  &  \\
+		\midrule
+		Ubuntu GNOME                       &         &  &  \\
+		FFmpeg                             &         &  &  \\
+		x264                               &         &  &  \\
+		x265                               &         &  &  \\
+		OpenH264                           &         &  &  \\
+		libtheora                          &         &  &  \\
+		libvpx                             &         &  &  \\
+		NVIDIA System Management Interface &         &  &  \\
+		Intel Power Gadget                 &         &  &  \\
+		\acrshort{vmaf} Development Kit               &         &  &  \\
+		\acrshort{vqmt}                               &         &  &  \\
+		\bottomrule[2pt]
+	\end{tabu}
+\end{table}
 \section{Results and Analysis}
 \label{sec:results}
 

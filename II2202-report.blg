@@ -1,9 +1,5 @@
 [0] Config.pm:340> INFO - This is Biber 2.4
 [0] Config.pm:343> INFO - Logfile is 'II2202-report.blg'
-[31] biber:287> INFO - === Thu Oct 13, 2016, 12:59:09
-[105] Biber.pm:348> INFO - Reading 'II2202-report.bcf'
-[228] Biber.pm:742> INFO - Found 0 citekeys in bib section 0
-[228] Utils.pm:147> WARN - The file 'II2202-report.bcf' does not contain any citations!
-[236] bbl.pm:519> INFO - Writing 'II2202-report.bbl' with encoding 'UTF-8'
-[237] bbl.pm:615> INFO - Output to II2202-report.bbl
-[237] Biber.pm:109> INFO - WARNINGS: 1
+[32] biber:287> INFO - === Thu Oct 13, 2016, 14:27:46
+[94] Utils.pm:163> ERROR - Cannot find control file 'II2202-report.bcf'! - did you pass the "backend=biber" option to BibLaTeX?
+[94] Biber.pm:113> INFO - ERRORS: 1

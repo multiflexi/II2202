@@ -3,17 +3,10 @@
 \select@language {UKenglish}
 \defcounter {refsection}{0}\relax 
 \select@language {UKenglish}
-\defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {1}Introduction}{2}{section.1}
-\defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {1.1}Theoretical framework/literature study}{2}{subsection.1.1}
-\defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {1.2}Research questions, hypotheses}{2}{subsection.1.2}
-\defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2}Method(s)}{2}{section.2}
-\defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {3}Results and Analysis}{2}{section.3}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4}Discussion}{2}{section.4}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {A}Insensible Approximation}{2}{appendix.A}
+\contentsline {section}{\numberline {4}Discussion}{3}{section.4}
+\contentsline {section}{\numberline {A}Insensible Approximation}{3}{appendix.A}
