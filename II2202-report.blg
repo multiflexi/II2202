@@ -1,15 +1,15 @@
-[0] Config.pm:340> INFO - This is Biber 2.4
-[0] Config.pm:343> INFO - Logfile is 'II2202-report.blg'
-[33] biber:287> INFO - === Thu Oct 13, 2016, 15:18:43
-[112] Biber.pm:348> INFO - Reading 'II2202-report.bcf'
-[226] Biber.pm:742> INFO - Found 2 citekeys in bib section 0
-[232] Biber.pm:3151> INFO - Processing section 0
-[261] Biber.pm:3308> INFO - Looking for bibtex format file 'II2202-report.bib' for section 0
-[265] bibtex.pm:1113> INFO - Decoding LaTeX character macros into UTF-8
-[268] bibtex.pm:974> INFO - Found BibTeX data source 'II2202-report.bib'
-[301] UCollate.pm:65> INFO - Overriding locale 'en-UK' defaults 'variable = shifted' with 'variable = non-ignorable'
-[301] UCollate.pm:65> INFO - Overriding locale 'en-UK' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[301] Biber.pm:3028> INFO - Sorting list 'nty/global' of type 'entry' with scheme 'nty' and locale 'en-UK'
-[301] Biber.pm:3032> INFO - No sort tailoring available for locale 'en-UK'
-[303] bbl.pm:519> INFO - Writing 'II2202-report.bbl' with encoding 'UTF-8'
-[310] bbl.pm:615> INFO - Output to II2202-report.bbl
+[0] Config.pm:354> INFO - This is Biber 2.6
+[0] Config.pm:357> INFO - Logfile is 'II2202-report.blg'
+[26] biber:302> INFO - === Sun Nov 27, 2016, 22:49:33
+[41] Biber.pm:360> INFO - Reading 'II2202-report.bcf'
+[113] Biber.pm:824> INFO - Found 2 citekeys in bib section 0
+[125] Biber.pm:3659> INFO - Processing section 0
+[139] Biber.pm:3829> INFO - Looking for bibtex format file 'II2202-report.bib' for section 0
+[140] bibtex.pm:1414> INFO - Decoding LaTeX character macros into UTF-8
+[141] bibtex.pm:1271> INFO - Found BibTeX data source 'II2202-report.bib'
+[157] UCollate.pm:68> INFO - Overriding locale 'en-UK' defaults 'variable = shifted' with 'variable = non-ignorable'
+[157] UCollate.pm:68> INFO - Overriding locale 'en-UK' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[157] Biber.pm:3488> INFO - Sorting list 'nty/global/' of type 'entry' with scheme 'nty' and locale 'en-UK'
+[157] Biber.pm:3494> INFO - No sort tailoring available for locale 'en-UK'
+[160] bbl.pm:597> INFO - Writing 'II2202-report.bbl' with encoding 'UTF-8'
+[160] bbl.pm:701> INFO - Output to II2202-report.bbl

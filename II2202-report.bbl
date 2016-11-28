@@ -1,5 +1,5 @@
 % $ biblatex auxiliary file $
-% $ biblatex bbl format version 2.6 $
+% $ biblatex bbl format version 2.8 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
@@ -18,22 +18,24 @@
 
 
 \refsection{0}
-  \sortlist[entry]{nty/global}
+  \sortlist[entry]{nty/global/}
     \entry{intelffmpeg}{online}{}
       \name{author}{1}{}{%
         {{hash=42af28f239d9ce2a4d0f9a032741150e}{%
            family={Corporation},
-           family_i={C\bibinitperiod},
+           familyi={C\bibinitperiod},
            given={Intel},
-           given_i={I\bibinitperiod}}}%
+           giveni={I\bibinitperiod}}}%
       }
       \list{language}{1}{%
         {english}%
       }
       \strng{namehash}{42af28f239d9ce2a4d0f9a032741150e}
       \strng{fullhash}{42af28f239d9ce2a4d0f9a032741150e}
+      \strng{authornamehash}{42af28f239d9ce2a4d0f9a032741150e}
+      \strng{authorfullhash}{42af28f239d9ce2a4d0f9a032741150e}
       \field{sortinit}{C}
-      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{sortinithash}{095692fd22cc3c74d7fe223d02314dbd}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{day}{24}
@@ -44,6 +46,8 @@
       \field{urlmonth}{10}
       \field{urlyear}{2016}
       \field{year}{2015}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
       \verb{url}
       \verb http://www.intel.ie/content/dam/www/public/emea/xe/en/documents/white-papers/quicksync-video-ffmpeg-install-valid.pdf
       \endverb
@@ -52,20 +56,22 @@
       \name{author}{1}{}{%
         {{hash=61a23953300b78e83f381e02ca45c5e4}{%
            family={Corporation},
-           family_i={C\bibinitperiod},
+           familyi={C\bibinitperiod},
            given={NVIDIA},
-           given_i={N\bibinitperiod}}}%
+           giveni={N\bibinitperiod}}}%
       }
       \list{language}{1}{%
         {english}%
       }
       \strng{namehash}{61a23953300b78e83f381e02ca45c5e4}
       \strng{fullhash}{61a23953300b78e83f381e02ca45c5e4}
+      \strng{authornamehash}{61a23953300b78e83f381e02ca45c5e4}
+      \strng{authorfullhash}{61a23953300b78e83f381e02ca45c5e4}
       \field{sortinit}{C}
-      \field{sortinithash}{59f25d509f3381b07695554a9f35ecb2}
+      \field{sortinithash}{095692fd22cc3c74d7fe223d02314dbd}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{day}{09}
+      \field{day}{9}
       \field{month}{10}
       \field{subtitle}{Installation and User Guide}
       \field{title}{FFMPEG WITH NVIDIA ACCELERATION ON UBUNTU LINUX}
@@ -73,6 +79,8 @@
       \field{urlmonth}{10}
       \field{urlyear}{2016}
       \field{year}{2015}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
       \verb{url}
       \verb http://developer.download.nvidia.com/compute/redist/ffmpeg/1511-patch/FFMPEG-with-NVIDIA-Acceleration-on-Ubuntu_UG_v01.pdf
       \endverb

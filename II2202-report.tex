@@ -194,9 +194,9 @@ We choose three test sequences, each \SI{10}{\second} long.  More in table \ref{
 		\midrule
 		Resolution   & $3840\times2160$               & $3840\times2160$                     & $4096\times1744$  \\
 		framerate    & $50$p                     & $50$p                           & $24$p        \\
-		\# of frames & $500$                     & $500$                           & $240$        \\
+		\# of frames & $500$                     & $500$                           & $500$        \\
 		subsampling & $4:2:0$	&	$4:2:0$	&	$4:2:0$ \\
-		size in bytes         & $6220803036$     & $6220803036$                 &          \\
+		size in bytes         & \num{6220803036}     & \num{6220803036}                 &    \num{5357571060}      \\
 		\bottomrule[2pt]  
 	\end{tabu}
 \end{table}
@@ -215,28 +215,43 @@ Information about used software are in table \ref{tab:sw}.
 	\centering
 	\caption{Used software}
 	\label{tab:sw}
-	\begin{tabu}{llll}
+	\begin{tabu}{ll}
 		\toprule[2pt]
-		Name                               & Version &  &  \\
+		Name                               & Version  \\
 		\midrule
-		Ubuntu GNOME                       &         &  &  \\
-		FFmpeg                             &         &  &  \\
-		x264                               &         &  &  \\
-		x265                               &         &  &  \\
-		OpenH264                           &         &  &  \\
-		libtheora                          &         &  &  \\
-		libvpx                             &         &  &  \\
-		NVIDIA System Management Interface &         &  &  \\
-		Intel Power Gadget                 &         &  &  \\
-		\acrshort{vmaf} Development Kit               &         &  &  \\
-		\acrshort{vqmt}                               &         &  &  \\
+		Ubuntu GNOME                       & 16.04.1 LTS   \\
+		FFmpeg                             &           \\
+		x264                               &          \\
+		x265                               &          \\
+		OpenH264                           &          \\
+		libtheora                          &         \\
+		libvpx                             &         \\
+		NVIDIA SMI &          \\
+		Intel Power Gadget                 &       \\
+		\acrshort{vmaf} Development Kit               &          \\
+		\acrshort{vqmt}                               &        \\
+		\bottomrule[2pt]
+	\end{tabu}
+\end{table}
+
+\begin{table}[]
+	\centering
+	\caption{Used hardware}
+	\label{tab:hw}
+	\begin{tabu}{ll}
+		\toprule[2pt]
+		Part                               & Name \\
+		\midrule
+		CPU                      & Intel Core i5-4570@\SI{3.2}{\giga\hertz}   \\
+		RAM                             &   DDR3 \SI{32}{\giga\byte}     \\
+		GPU                               & Nvidia 960 GTX \SI{4}{\giga\byte}         \\
+		SSD                               & Samsung EVO 850 \SI{250}{\giga\byte}      \\
 		\bottomrule[2pt]
 	\end{tabu}
 \end{table}
 \section{Results and Analysis}
 \label{sec:results}
 
-xxxxx xxxx xxxx 
 
 \section{Discussion}
 \label{sec:discussion}
@@ -245,6 +260,9 @@ xxxxx xxxx xxxx
 \printbibliography
 \appendix
 \section{Annex}
+Compile script
 \lstinputlisting[frame=single,breaklines=true]{compile.sh}
+Encoding script
+\lstinputlisting[frame=single,breaklines=true]{encoding.sh}
 
 \end{document}
