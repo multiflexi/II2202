@@ -1,0 +1,56 @@
+encoding, need to measure time, cputime and consumption on both CPU and GPU during each encode and power 
+files old_town_cross_2160p50.y4m, crowd_run_2160p50.y4m, sintel.y4m
+
+x264
+ffmpeg -benchmark -y -i <input file> -c:v libx264 -preset <ultrafast|superfast|veryfast|faster|fast|medium|slow|slower|veryslow|placebo> -b:v <500-15000> -an <output file>
+
+x265
+ffmpeg -benchmark -y -i <input file> -c:v libx265 -preset <ultrafast|superfast|veryfast|faster|fast|medium|slow|slower|veryslow|placebo> -b:v <500-15000> -an <output file>
+
+NVENC h264
+ffmpeg -benchmark -y -i <input file> -c:v nvenc_h264 -preset <medium|fast|hp|hq|bd|ll|llhq|llhp> -b:v <500-15000> -an <output file>
+
+NVENC h265
+ffmpeg -benchmark -y -i <input file> -c:v nvenc_hevc -preset <medium|fast|hp|hq|bd|ll|llhq|llhp> -b:v <500-15000> -an <output file>
+
+QSV h264
+ffmpeg -benchmark -y -i <input file> -c:v h264_qsv -preset <veryfast|faster|fast|medium|slow|slower|veryslow> -b:v <500-15000> -an <output file>
+
+libvpx VP8
+ffmpeg -benchmark -y -i <input file> -c:v libvpx -quality <best|good|realtime> -b:v <500-15000> -an <output file>
+
+libvpx VP9
+ffmpeg -benchmark -y -i <input file> -c:v libvpx-vp9 -quality <best|good|realtime> -b:v <500-15000> -an <output file>
+
+libtheora
+ffmpeg -benchmark -y -i <input file> -c:v libtheora -b:v <500-15000> -an <output file>
+
+all results must be encoded back to raw *.for evaluation
+
+ffmpeg -i <input file> -c:v rawvideo -pix_fmt yuv420p <output file>
+
+
+-test vp8 best vs good cpu-used-0
+-number of encodes 3* 10*30 + 10*30 + 3*30 + 3*30 + 11 
+
+Intel Power Gadget
+first add these modules to kernel
+sudo modprobe msr
+sudo modprobe cpuid
+
+sudo ./power_gadget -e <sampling delay in ms> -d <duration of measuring - will not use I guess>
+
+RAPL tools - other tool to measure power by Intel for realtime usage
+sudo ./PowerMonitor
+
+Nvidia - table
+nvidia-smi dmon -i 0 -d 1 -s pucv -o DT
+
+Nvidia - csv, every second
+nvidia-smi -i 0 -l 1 --query-gpu=timestamp,pstate,temperature.gpu,utilization.gpu,memory.used,clocks.current.video,cloc.current.graphics,clocks.current.sm,fan.speed,power.draw --format=csv
+
+VQMT
+./vqmt <OriginalVideo> <ProcessedVideo> <Height> <Width> 500 1 <output file> PSNRHVSM MSSSIM
+
+VMAF
+./run_vmaf yuv420p <width> <height> <original file> <processed file> --out-fmt text

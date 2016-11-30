@@ -118,3 +118,33 @@ parent={},%
 %
 }%
 }%
+\ifglsentryexists{nvidiasmi}{}%
+{%
+\gls@defglossaryentry{nvidiasmi}%
+{%
+name={NVIDIA SMI},%
+sort={NVIDIA SMI},%
+type={acronym},%
+first={NVIDIA System Management Interface\glsspace (NVIDIA SMI)},%
+firstplural={NVIDIA System Management Interfaces\glsspace (NVIDIA SMIs)},%
+text={NVIDIA SMI},%
+plural={NVIDIA SMIs},%
+description={NVIDIA System Management Interface},%
+descriptionplural={NVIDIA System Management Interface\acrpluralsuffix },%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={NVIDIA System Management Interface},%
+longplural={NVIDIA System Management Interfaces},%
+short={NVIDIA SMI},%
+shortplural={NVIDIA SMIs},%
+counter={page},%
+parent={},%
+%
+}%
+}%

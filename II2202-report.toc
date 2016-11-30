@@ -5,8 +5,11 @@
 \select@language {UKenglish}
 \contentsline {section}{\numberline {1}Introduction}{2}{section.1}
 \contentsline {subsection}{\numberline {1.1}Theoretical framework/literature study}{2}{subsection.1.1}
+\contentsline {subsubsection}{\numberline {1.1.1}\acrfull {psnrhvsm}}{2}{subsubsection.1.1.1}
+\contentsline {subsubsection}{\numberline {1.1.2}\acrfull {msssim}}{2}{subsubsection.1.1.2}
+\contentsline {subsubsection}{\numberline {1.1.3}\acrfull {vmaf}}{2}{subsubsection.1.1.3}
 \contentsline {subsection}{\numberline {1.2}Research questions, hypotheses}{2}{subsection.1.2}
 \contentsline {section}{\numberline {2}Method}{2}{section.2}
 \contentsline {section}{\numberline {3}Results and Analysis}{3}{section.3}
 \contentsline {section}{\numberline {4}Discussion}{3}{section.4}
-\contentsline {section}{\numberline {A}Annex}{3}{appendix.A}
+\contentsline {section}{\numberline {A}Annex}{5}{appendix.A}

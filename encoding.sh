@@ -12,79 +12,345 @@ function press_enter
 
 function evaluate_x264
 {
-	preset=(ultrafast superfast veryfast faster fast medium slow slower veryslow placebo)
-	bitrate=(500 1000 1500 2000 2500 3000 3500 4000 4500 5000 6000 7000 8000 9000 10000 11000 12000 13000 14000 15000)
+    bitrate=(500k 1000k 1500k 2000k 2500k 3000k 3500k 4000k 4500k 5000k 6000k 7000k 8000k 9000k 10000k 11000k 12000k 13000k 14000k 15000k)
+    preset=(ultrafast superfast veryfast faster fast medium slow slower veryslow placebo)
 
-#	if [ -d Output/x264 ]; then
-#		echo "x264 folder already exists, check for results"
-#		return
-#	elif [ ! -d Output/x264 ]; then
-#		mkdir Output/x264
-#	fi
+    if [ -d Output/x264 ]; then
+        echo "test folder already exists, check for results"
+        return
+    elif [ ! -d Output/x264 ]; then
+        mkdir Output/x264
+    fi
 
-#	if [ ! -d Output/x264/encoded ]; then
-#		mkdir Output/x264/encoded
-#	fi
+    if [ ! -d Output/x264/encoded ]; then
+        mkdir Output/x264/encoded
+    fi
 
-#	if [ ! -d Output/x264/transcoded ]; then
-#		mkdir Output/x264/transcoded
-#	fi
+    if [ ! -d Output/x264/transcoded ]; then
+        mkdir Output/x264/transcoded
+    fi
 
-#	if [ ! -d Output/x264/results ]; then
-#		mkdir Output/x264/results
-#	fi
+    if [ ! -d Output/x264/results ]; then
+        mkdir Output/x264/results
+    fi
 
-#	if [ ! -d Output/x264/results/powergadget ]; then
-#		mkdir Output/x264/results/powergadget
-#	fi
+    if [ ! -d Output/x264/results/powergadget ]; then
+        mkdir Output/x264/results/powergadget
+    fi
 
-#	if [ ! -d Output/x264/results/nvidiasmi ]; then
-#		mkdir Output/x264/results/nvidiasmi
-#	fi
+    if [ ! -d Output/x264/results/ffmpeg ]; then
+        mkdir Output/x264/results/ffmpeg
+    fi
 
-#	if [ ! -d Output/x264/results/vqmt ]; then
-#		mkdir Output/x264/results/vqmt
-#	fi
+    if [ ! -d Output/x264/results/vqmt ]; then
+        mkdir Output/x264/results/vqmt
+    fi
 
-#	if [ ! -d Output/x264/results/vmaf ]; then
-#		mkdir Output/x264/results/vmaf
-#	fi
+    if [ ! -d Output/x264/results/vmaf ]; then
+        mkdir Output/x264/results/vmaf
+    fi
 
-	height=
-	width=
-	for v in "${video[@]}"; do
-		for p in "${preset[@]}"; do
-			for b in "${bitrate[@]}"; do
-				echo -e "\e[92mStarting power consumption logging\e[0m"
-				echo "modprobe msr"
-				echo "modprobe cpuid"
-				echo "Tools/power_gadget & > Output/x264/results/powergadget/$v$p$b.csv"
-				echo "nvidia-smi -i 0 -l 1 --query-gpu=timestamp,pstate,temperature.gpu,utilization.gpu,memory.used,clocks.current.video,clocks.current.graphics,clocks.current.sm,fan.speed,power.draw --format=csv -f Output/x264/results/nvidiasmi/$v$p$b.csv"
-				echo -e "\e[92mStarting Encoding\e[0m"
-				echo "ffmpeg -benchmark -y -i Input/$v.yuv -c:v libx264 -preset $p -b:v $b -an Output/x264/encoded/$v$p$b"
-				echo -e "\e[32mDone encoding\e[0m"
-				echo -e "\e[32mStarting Transcoding\e[0m"
-				echo "ffmpeg -i Output/x264/encoded/$v$p$b.mkv -c:v rawvideo -pix_fmt yuv420p Output/x264/transcoded/$v$p$b.yuv"
-				echo -e "\e[32mDone transcoding\e[0m"
-				echo -e "\e[32mStarting evaluation with VQMT and VMAF\e[0m" 
-				if [ $v=${video[0]} ] || [ $v=${video[1]} ]; then
-					height=2160
-					width=3840
-				else 
-					height=1744
-					width=4096
-				fi
-				echo $v
-				echo "Tools/vqmt Input/$v.y4m Output/x264/transcoded/$v$p$b height width 500 1 Output/x264/results/vqmt/$v$p$p PSNRHVSM MSSSIM"
-				echo "Tools/run_vmaf yuv420p width height Input/$v.y4m Output/x264/transcoded/$v$p$b --out-fmt text > Output/x264/results/vmaf/$v$p$b"
-				echo -e "\e[32mDone evaluating with VQMT and VMAF\e[0m"
-				echo "rm Output/x264/encoded/$v$p$b"
-				echo "rm Output/x264/transcoded/$v$p$b"
-			done	
-		done	
-	done	
-	
+    chmod -R 777 Output/x264
+
+    height=
+    width=
+
+    for v in "${video[@]}"; do
+        for p in "${preset[@]}"; do
+            for b in "${bitrate[@]}"; do
+                echo -e "\e[92mStarting power consumption logging\e[0m"
+                modprobe msr
+                modprobe cpuid
+                Tools/power_gadget/power_gadget -e 1000 > Output/x264/results/powergadget/$v$p$b.csv &
+                echo -e $(date -u) "\e[92mStarting Encoding\e[0m"
+                FFREPORT=file=Output/x264/results/ffmpeg/$v$p$b.log:level=32 Tools/ffmpeg/ffmpeg -benchmark -y -i Input/y4m/$v.y4m -c:v libx264 -preset $p -b:v $b -an Output/x264/encoded/$v$p$b.mkv
+                echo -e $(date -u) "\e[93mDone with encoding\e[0m"
+                pkill -f power_gadget
+                echo -e $(date -u) "\e[93mDone with power consumption logging\e[0m"
+                echo -e $(date -u) "\e[92mStarting Transcoding\e[0m"
+                FFREPORT=file=Output/x264/results/ffmpeg/T$v$p$b.log:level=32 Tools/ffmpeg/ffmpeg -i Output/x264/encoded/$v$p$b.mkv -c:v rawvideo -pix_fmt yuv420p Output/x264/transcoded/$v$p$b.yuv
+                echo -e $(date -u) "\e[93mDone with transcoding\e[0m"
+                echo -e $(date -u) "\e[92mStarting evaluation with VQMT and VMAF\e[0m"
+                if [ "$v" == "${video[0]}" ] || [ "$v" == "${video[1]}" ]; then
+                    height=2160
+                    width=3840
+                elif [ "$v" == "${video[2]}" ]; then
+                    height=1744
+                    width=4096
+                fi
+                Tools/vqmt/vqmt Input/yuv/$v.yuv Output/x264/transcoded/$v$p$b.yuv $height $width 500 1 Output/x264/results/vqmt/$v$p$b PSNRHVSM MSSSIM &
+                Tools/vmaf/run_vmaf yuv420p $width $height Input/yuv/$v.yuv Output/x264/transcoded/$v$p$b.yuv --out-fmt text > Output/x264/results/vmaf/$v$p$b &
+                wait ${!}
+                echo -e $(date -u) "\e[93mDone with evaluating with VQMT and VMAF\e[0m"
+                rm Output/x264/encoded/$v$p$b.mkv
+                rm Output/x264/transcoded/$v$p$b.yuv
+            done
+        done
+    done
+
 }
+
+function evaluate_x265
+{
+    bitrate=(500k 1000k 1500k 2000k 2500k 3000k 3500k 4000k 4500k 5000k 6000k 7000k 8000k 9000k 10000k 11000k 12000k 13000k 14000k 15000k)
+    preset=(ultrafast superfast veryfast faster fast medium slow slower veryslow placebo)
+
+    if [ -d Output/x265 ]; then
+        echo "test folder already exists, check for results"
+        return
+    elif [ ! -d Output/x265 ]; then
+        mkdir Output/x265
+    fi
+
+    if [ ! -d Output/x265/encoded ]; then
+        mkdir Output/x265/encoded
+    fi
+
+    if [ ! -d Output/x265/transcoded ]; then
+        mkdir Output/x265/transcoded
+    fi
+
+    if [ ! -d Output/x265/results ]; then
+        mkdir Output/x265/results
+    fi
+
+    if [ ! -d Output/x265/results/powergadget ]; then
+        mkdir Output/x265/results/powergadget
+    fi
+
+    if [ ! -d Output/x265/results/ffmpeg ]; then
+        mkdir Output/x265/results/ffmpeg
+    fi
+
+    if [ ! -d Output/x265/results/nvidiasmi ]; then
+        mkdir Output/x265/results/nvidiasmi
+    fi
+
+    if [ ! -d Output/x265/results/vqmt ]; then
+        mkdir Output/x265/results/vqmt
+    fi
+
+    if [ ! -d Output/x265/results/vmaf ]; then
+        mkdir Output/x265/results/vmaf
+    fi
+
+    chmod -R 777 Output/x265
+
+    height=
+    width=
+
+    for v in "${video[@]}"; do
+        for p in "${preset[@]}"; do
+            for b in "${bitrate[@]}"; do
+                echo -e "\e[92mStarting power consumption logging\e[0m"
+                modprobe msr
+                modprobe cpuid
+                Tools/power_gadget/power_gadget -e 1000 > Output/x265/results/powergadget/$v$p$b.csv &
+                nvidia-smi -i 0 -l 1 --query-gpu=timestamp,pstate,temperature.gpu,utilization.gpu,memory.used,clocks.current.video,clocks.current.graphics,clocks.current.sm,fan.speed,power.draw --format=csv -f Output/x265/results/nvidiasmi/$v$p$b.csv &
+                echo -e "\e[92mStarting Encoding\e[0m"
+                FFREPORT=file=Output/x265/results/ffmpeg/$v$p$b.log:level=32 Tools/ffmpeg/ffmpeg -benchmark -y -i Input/y4m/$v.y4m -c:v libx265 -preset $p -b:v $b -an Output/x265/encoded/$v$p$b.mkv
+                echo -e "\e[93mDone with encoding\e[0m"
+                pkill -f power_gadget
+                pkill -f nvidia-smi
+                echo -e "\e[93mDone with power consumption logging\e[0m"
+                echo -e "\e[92mStarting Transcoding\e[0m"
+                FFREPORT=file=Output/x265/results/ffmpeg/T$v$p$b.log:level=32 Tools/ffmpeg/ffmpeg -i Output/x265/encoded/$v$p$b.mkv -c:v rawvideo -pix_fmt yuv420p Output/x265/transcoded/$v$p$b.yuv
+                echo -e "\e[93mDone with transcoding\e[0m"
+                echo -e "\e[92mStarting evaluation with VQMT and VMAF\e[0m"
+                if [ "$v" == "${video[0]}" ] || [ "$v" == "${video[1]}" ]; then
+                    height=2160
+                    width=3840
+                elif [ "$v" == "${video[2]}" ]; then
+                    height=1744
+                    width=4096
+                fi
+                Tools/vqmt/vqmt Input/yuv/$v.yuv Output/x265/transcoded/$v$p$b.yuv $height $width 500 1 Output/x265/results/vqmt/$v$p$b PSNRHVSM MSSSIM &
+                Tools/vmaf/run_vmaf yuv420p $width $height Input/yuv/$v.yuv Output/x265/transcoded/$v$p$b.yuv --out-fmt text > Output/x265/results/vmaf/$v$p$b &
+                wait ${!}
+                echo -e "\e[93mDone with evaluating with VQMT and VMAF\e[0m"
+                rm Output/x265/encoded/$v$p$b.mkv
+                rm Output/x265/transcoded/$v$p$b.yuv
+            done
+        done
+    done
+}
+
+function evaluate_NVENCh264
+{
+    bitrate=(500k 1000k 1500k 2000k 2500k 3000k 3500k 4000k 4500k 5000k 6000k 7000k 8000k 9000k 10000k 11000k 12000k 13000k 14000k 15000k)
+    preset=(medium fast hp hq bd ll llhq llhp)
+
+    if [ -d Output/NVENCh264 ]; then
+        echo "test folder already exists, check for results"
+        return
+    elif [ ! -d Output/NVENCh264 ]; then
+        mkdir Output/NVENCh264
+    fi
+
+    if [ ! -d Output/NVENCh264/encoded ]; then
+        mkdir Output/NVENCh264/encoded
+    fi
+
+    if [ ! -d Output/NVENCh264/transcoded ]; then
+        mkdir Output/NVENCh264/transcoded
+    fi
+
+    if [ ! -d Output/NVENCh264/results ]; then
+        mkdir Output/NVENCh264/results
+    fi
+
+    if [ ! -d Output/NVENCh264/results/powergadget ]; then
+        mkdir Output/NVENCh264/results/powergadget
+    fi
+
+    if [ ! -d Output/NVENCh264/results/ffmpeg ]; then
+        mkdir Output/NVENCh264/results/ffmpeg
+    fi
+
+    if [ ! -d Output/NVENCh264/results/nvidiasmi ]; then
+        mkdir Output/NVENCh264/results/nvidiasmi
+    fi
+
+    if [ ! -d Output/NVENCh264/results/vqmt ]; then
+        mkdir Output/NVENCh264/results/vqmt
+    fi
+
+    if [ ! -d Output/NVENCh264/results/vmaf ]; then
+        mkdir Output/NVENCh264/results/vmaf
+    fi
+
+    chmod -R 777 Output/NVENCh264
+
+    height=
+    width=
+
+    for p in "${preset[@]}"; do
+        for b in "${bitrate[@]}"; do
+            for v in "${video[@]}"; do
+                echo -e $(date -u) "\e[92mStarting power consumption logging\e[0m"
+                modprobe msr
+                modprobe cpuid
+                Tools/power_gadget/power_gadget -e 1000 > Output/NVENCh264/results/powergadget/$v$p$b.csv &
+                nvidia-smi -i 0 -l 1 --query-gpu=timestamp,pstate,temperature.gpu,utilization.gpu,memory.used,clocks.current.video,clocks.current.graphics,clocks.current.sm,fan.speed,power.draw --format=csv -f Output/NVENCh264/results/nvidiasmi/$v$p$b.csv &
+                echo -e $(date -u) "\e[92mStarting Encoding\e[0m"
+                FFREPORT=file=Output/NVENCh264/results/ffmpeg/$v$p$b.log:level=32 Tools/ffmpeg/ffmpeg -benchmark -y -i Input/y4m/$v.y4m -c:v h264_nvenc -preset $p -b:v $b -an Output/NVENCh264/encoded/$v$p$b.mkv
+                echo -e $(date -u) "\e[93mDone with encoding\e[0m"
+                pkill -f power_gadget
+                pkill -f nvidia-smi
+                echo -e $(date -u) "\e[93mDone with power consumption logging\e[0m"
+                echo -e $(date -u) "\e[92mStarting Transcoding\e[0m"
+                FFREPORT=file=Output/NVENCh264/results/ffmpeg/T$v$p$b.log:level=32 Tools/ffmpeg/ffmpeg -i Output/NVENCh264/encoded/$v$p$b.mkv -c:v rawvideo -pix_fmt yuv420p Output/NVENCh264/transcoded/$v$p$b.yuv
+                echo -e $(date -u) "\e[93mDone with transcoding\e[0m"
+	    done
+	    for v in "${video[@]}"; do
+                echo -e $(date -u) "\e[92mStarting evaluation with VQMT and VMAF\e[0m"
+                if [ "$v" == "${video[0]}" ] || [ "$v" == "${video[1]}" ]; then
+                    height=2160
+                    width=3840
+                elif [ "$v" == "${video[2]}" ]; then
+                    height=1744
+                    width=4096
+                fi
+                Tools/vqmt/vqmt Input/yuv/$v.yuv Output/NVENCh264/transcoded/$v$p$b.yuv $height $width 500 1 Output/NVENCh264/results/vqmt/$v$p$b PSNRHVSM MSSSIM &
+                Tools/vmaf/run_vmaf yuv420p $width $height Input/yuv/$v.yuv Output/NVENCh264/transcoded/$v$p$b.yuv --out-fmt text > Output/NVENCh264/results/vmaf/$v$p$b &
+            done
+	    wait 
+	    echo -e $(date -u) "\e[93mDone with evaluating with VQMT and VMAF\e[0m"
+	    for v in "${video[@]}"; do
+                rm Output/NVENCh264/encoded/$v$p$b.mkv
+                rm Output/NVENCh264/transcoded/$v$p$b.yuv
+ 	    done
+        done
+    done
+}
+
+function evaluate_NVENCh265
+{
+    bitrate=(500k 1000k 1500k 2000k 2500k 3000k 3500k 4000k 4500k 5000k 6000k 7000k 8000k 9000k 10000k 11000k 12000k 13000k 14000k 15000k)
+    preset=(medium fast hp hq bd ll llhq llhp)
+
+    if [ -d Output/NVENCh265 ]; then
+        echo "test folder already exists, check for results"
+        return
+    elif [ ! -d Output/NVENCh265 ]; then
+        mkdir Output/NVENCh265
+    fi
+
+    if [ ! -d Output/NVENCh265/encoded ]; then
+        mkdir Output/NVENCh265/encoded
+    fi
+
+    if [ ! -d Output/NVENCh265/transcoded ]; then
+        mkdir Output/NVENCh265/transcoded
+    fi
+
+    if [ ! -d Output/NVENCh265/results ]; then
+        mkdir Output/NVENCh265/results
+    fi
+
+    if [ ! -d Output/NVENCh265/results/powergadget ]; then
+        mkdir Output/NVENCh265/results/powergadget
+    fi
+
+    if [ ! -d Output/NVENCh265/results/ffmpeg ]; then
+        mkdir Output/NVENCh265/results/ffmpeg
+    fi
+
+    if [ ! -d Output/NVENCh265/results/nvidiasmi ]; then
+        mkdir Output/NVENCh265/results/nvidiasmi
+    fi
+
+    if [ ! -d Output/NVENCh265/results/vqmt ]; then
+        mkdir Output/NVENCh265/results/vqmt
+    fi
+
+    if [ ! -d Output/NVENCh265/results/vmaf ]; then
+        mkdir Output/NVENCh265/results/vmaf
+    fi
+
+    chmod -R 777 Output/NVENCh265
+
+    height=
+    width=
+
+    for v in "${video[@]}"; do
+        for p in "${preset[@]}"; do
+            for b in "${bitrate[@]}"; do
+                echo -e "\e[92mStarting power consumption logging\e[0m"
+                modprobe msr
+                modprobe cpuid
+                Tools/power_gadget/power_gadget -e 1000 > Output/NVENCh265/results/powergadget/$v$p$b.csv &
+                nvidia-smi -i 0 -l 1 --query-gpu=timestamp,pstate,temperature.gpu,utilization.gpu,memory.used,clocks.current.video,clocks.current.graphics,clocks.current.sm,fan.speed,power.draw --format=csv -f Output/NVENCh265/results/nvidiasmi/$v$p$b.csv &
+                echo -e "\e[92mStarting Encoding\e[0m"
+                FFREPORT=file=Output/NVENCh265/results/ffmpeg/$v$p$b.log:level=32 Tools/ffmpeg/ffmpeg -benchmark -y -i Input/y4m/$v.y4m -c:v nvenc_hevc -preset $p -b:v $b -an Output/NVENCh265/encoded/$v$p$b.mkv
+                echo -e "\e[93mDone with encoding\e[0m"
+                pkill -f power_gadget
+                pkill -f nvidia-smi
+                echo -e "\e[93mDone with power consumption logging\e[0m"
+                echo -e "\e[92mStarting Transcoding\e[0m"
+                FFREPORT=file=Output/NVENCh265/results/ffmpeg/T$v$p$b.log:level=32 Tools/ffmpeg/ffmpeg -i Output/NVENCh265/encoded/$v$p$b.mkv -c:v rawvideo -pix_fmt yuv420p Output/NVENCh265/transcoded/$v$p$b.yuv
+                echo -e "\e[93mDone with transcoding\e[0m"
+                echo -e "\e[92mStarting evaluation with VQMT and VMAF\e[0m"
+                if [ "$v" == "${video[0]}" ] || [ "$v" == "${video[1]}" ]; then
+                    height=2160
+                    width=3840
+                elif [ "$v" == "${video[2]}" ]; then
+                    height=1744
+                    width=4096
+                fi
+                Tools/vqmt/vqmt Input/yuv/$v.yuv Output/NVENCh265/transcoded/$v$p$b.yuv $height $width 500 1 Output/NVENCh265/results/vqmt/$v$p$b PSNRHVSM MSSSIM &
+                Tools/vmaf/run_vmaf yuv420p $width $height Input/yuv/$v.yuv Output/NVENCh265/transcoded/$v$p$b.yuv --out-fmt text > Output/NVENCh265/results/vmaf/$v$p$b &
+                wait ${!}
+                echo -e "\e[93mDone with evaluating with VQMT and VMAF\e[0m"
+                rm Output/NVENCh265/encoded/$v$p$b.mkv
+                rm Output/NVENCh265/transcoded/$v$p$b.yuv
+            done
+        done
+    done
+}
+
+
+
 
 function evaluate_test
 {
@@ -184,13 +450,13 @@ until [ "$selection" = "0" ]; do
 	echo "6 - Test"
 	echo "0 - Exit"
 	echo "" 
-	echo -n "Enter selection"
+	echo -n "Enter selection: "
 	read selection
 	case $selection in
 		1 ) evaluate_x264; press_enter ;;
-		2 ) echo "evaluate_x265"; press_enter;;
-		3 ) echo "evaluate_NVENCh264"; press_enter;;
-		4 ) echo "evaluate_NVENCh265"; press_enter;;
+		2 ) evaluate_x265; press_enter;;
+		3 ) evaluate_NVENCh264; press_enter;;
+		4 ) evaluate_NVENCh265; press_enter;;
 		5 ) echo "evaluate_QSVh264"; press_enter;;
 		6 ) evaluate_test; press_enter;;
 		0 ) exit;;

@@ -160,6 +160,7 @@ Your abstract here.
 \newacronym{psnrhvsm}{PSNR-HVS-M}{Peak Signal-to-Noise Ratio taking into account Contrast Sensitivity Function (CSF) and between-coefficient contrast masking of DCT basis functions}
 \newacronym{vmaf}{VMAF}{Video Multi-Method Assessment Fusion}
 \newacronym{vqmt}{VQMT}{Video Quality Measurement Tool}
+\newacronym{nvidiasmi}{NVIDIA SMI}{NVIDIA System Management Interface}
 \printglossary[type=\acronymtype]
 
 
@@ -172,18 +173,25 @@ Video encoding and decoding are processes with many variables which can influenc
 
 \subsection{Theoretical framework/literature study}
 \label{sect:framework}
-\acrshort{psnrhvsm}\acrshort{msssim}
+
 
 We had to compile FFmpeg with support of NVENC and QSV.\cite{intelffmpeg,nvidiaffmpeg}
 
+\subsubsection{\acrfull{psnrhvsm}}
+In dB. More is better.
+\subsubsection{\acrfull{msssim}}
+From 0 to 1. More is better.
+\subsubsection{\acrfull{vmaf}}
+Newly developed metric by Netflix. Based on machine learning. From 0 to 100. More is better.
+
 \subsection{Research questions, hypotheses}
 \label{sect:questions}
-xxxxx xxxx xxxx 
+Hardware accelerated codecs are faster but with lower quality and lower power consumption.
 
 
 \section{Method}
 \label{sec:method}
-We choose three test sequences, each \SI{10}{\second} long.  More in table \ref{tab:sequences}
+We choose three test sequences, each \num{500} frames long.  More in table \ref{tab:sequences}
 \begin{table}[h]
 	\centering
 	\caption{Parameters of test sequences}
@@ -192,26 +200,27 @@ We choose three test sequences, each \SI{10}{\second} long.  More in table \ref{
 		\toprule[2pt]
 		Sequence     & crowd\_run\_2160p50.y4m & old\_town\_cross\_2160p50.y4m & sintel.y4m \\
 		\midrule
-		Resolution   & $3840\times2160$               & $3840\times2160$                     & $4096\times1744$  \\
-		framerate    & $50$p                     & $50$p                           & $24$p        \\
-		\# of frames & $500$                     & $500$                           & $500$        \\
+		Resolution   & $3840\times2160$               & $3840\times2160$  & $4096\times1744$  \\
+		framerate    & $50$p                     & $50$p                 & $24$p        \\
+		\# of frames & $500$                     & $500$                 & $500$        \\
 		subsampling & $4:2:0$	&	$4:2:0$	&	$4:2:0$ \\
-		size in bytes         & \num{6220803036}     & \num{6220803036}                 &    \num{5357571060}      \\
+		size in bytes &\num{6220803036}&\num{6220803036}&    \num{5357571060}      \\
 		\bottomrule[2pt]  
 	\end{tabu}
 \end{table}
 
 Whole process was done for all codecs as follows:
-\begin{enumerate}
-	\item Power measuring tools NVIDIA System Management Interface and Intel Power Gadget are enabled
+\begin{enumerate} 
+	\item Power measuring tools are enabled
 	\item Encoding proceeds
 	\item Power measuring tools are disabled
 	\item Encoded video is trans-coded to YUV420P
-	\item Quality is measured by \acrshort{vmaf} and \acrshort{vqmt}
+	\item Quality is measured
 \end{enumerate}
-This is done for all three chosen sequences, all chosen codecs and all presets available in bit-rates from \textsc{\SI{500}{\kilo\bit\per\second}} to \SI{15000}{\kilo\bit\per\second} with \SI{500}{\kilo\bit} steps. Total number of encodes is xx.
-Information about used software are in table \ref{tab:sw}.
-\begin{table}[]
+This is done for all three chosen sequences, all chosen codecs and all presets available in bit-rates from \textsc{\SI{500}{\kilo\bit\per\second}} to \SI{5000}{\kilo\bit\per\second} with \SI{500}{\kilo\bit} steps and then up to \SI{15000}{\kilo\bit\per\second} with \SI{1000}{\kilo\bit} steps. Total number of encodes is (480 so far). For quality evaluation we chose 3 methods: \acrshort{psnrhvsm} and \acrshort{msssim}, both measured by \acrshort{vqmt}, and then \acrshort{vmaf}. Power consumption was measured by Intel Power Gadget which provides cumulative energy consumption in \SI{}{\milli\watt\hour}. Power consumption of GPU was measured by \acrfull{nvidiasmi}. Because this tool does not provide cumulative values, measurement was done \SI{1}{\second} intervals and then summed and converted to \SI{}{\milli\watt\hour}.
+
+Information about used software provides table \ref{tab:sw}. Information about used hardware provides table \ref{tab:hw}.
+\begin{table}[h]
 	\centering
 	\caption{Used software}
 	\label{tab:sw}
@@ -220,13 +229,15 @@ Information about used software are in table \ref{tab:sw}.
 		Name                               & Version  \\
 		\midrule
 		Ubuntu GNOME                       & 16.04.1 LTS   \\
+		Mesa                               &   13.0     \\
+		Nvidia driver                               &    375    \\
 		FFmpeg                             &           \\
 		x264                               &          \\
 		x265                               &          \\
 		OpenH264                           &          \\
 		libtheora                          &         \\
 		libvpx                             &         \\
-		NVIDIA SMI &          \\
+		\acrshort{nvidiasmi} &          \\
 		Intel Power Gadget                 &       \\
 		\acrshort{vmaf} Development Kit               &          \\
 		\acrshort{vqmt}                               &        \\
@@ -234,13 +245,13 @@ Information about used software are in table \ref{tab:sw}.
 	\end{tabu}
 \end{table}
 
-\begin{table}[]
+\begin{table}[h]
 	\centering
 	\caption{Used hardware}
 	\label{tab:hw}
 	\begin{tabu}{ll}
 		\toprule[2pt]
-		Part                               & Name \\
+		Part                               & Specification \\
 		\midrule
 		CPU                      & Intel Core i5-4570@\SI{3.2}{\giga\hertz}   \\
 		RAM                             &   DDR3 \SI{32}{\giga\byte}     \\
@@ -251,7 +262,27 @@ Information about used software are in table \ref{tab:sw}.
 \end{table}
 \section{Results and Analysis}
 \label{sec:results}
-
+\begin{figure}[h]
+	\vspace{-10pt}
+	\centering
+	\includegraphics[width=\textwidth]{img/h264nvencvmafcrowd.eps}
+	\caption{VMAF results of sequence Crowd Run}
+	\label{fig:h264nvencvmafcrowd}
+\end{figure}
+\begin{figure}[!h]
+	\vspace{-5pt}
+	\centering
+	\includegraphics[width=\textwidth]{img/h264nvencvmafsintel.eps}
+	\caption{VMAF results of sequence Sintel}
+	\label{fig:h264nvencvmafsintel}
+\end{figure}
+\begin{figure}[!h]
+	\vspace{0pt}
+	\centering
+	\includegraphics[width=\textwidth]{img/h264nvencintelsintel.eps}
+	\caption{Power consumption of CPU during encoding of Sintel}
+	\label{fig:h264nvencintelsintel}
+\end{figure}
 
 \section{Discussion}
 \label{sec:discussion}
