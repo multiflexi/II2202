@@ -1,0 +1,34 @@
+ffmpeg started on 2016-11-27 at 01:58:02
+Report written to "Output/NVENCh264/results/ffmpeg/old_town_cross_2160p50llhq1500k.log"
+Command line:
+Tools/ffmpeg/ffmpeg -benchmark -y -i Input/y4m/old_town_cross_2160p50.y4m -c:v h264_nvenc -preset llhq -b:v 1500k -an Output/NVENCh264/encoded/old_town_cross_2160p50llhq1500k.mkv
+ffmpeg version N-82227-gdb23fde Copyright (c) 2000-2016 the FFmpeg developers
+  built with gcc 5.4.0 (Ubuntu 5.4.0-6ubuntu1~16.04.2) 20160609
+  configuration: --prefix=/home/jaroslav/ffmpeg_build --pkg-config-flags=--static --extra-cflags=-I/home/jaroslav/ffmpeg_build/include --extra-ldflags=-L/home/jaroslav/ffmpeg_build/lib --bindir=/home/jaroslav/bin --enable-gpl --enable-libass --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-nvenc --enable-libmfx --enable-libxvid --enable-libgsm --enable-libopencore-amrnb --enable-version3 --enable-nonfree
+  libavutil      55. 35.100 / 55. 35.100
+  libavcodec     57. 66.101 / 57. 66.101
+  libavformat    57. 57.100 / 57. 57.100
+  libavdevice    57.  2.100 / 57.  2.100
+  libavfilter     6. 66.100 /  6. 66.100
+  libswscale      4.  3.100 /  4.  3.100
+  libswresample   2.  4.100 /  2.  4.100
+  libpostproc    54.  2.100 / 54.  2.100
+Input #0, yuv4mpegpipe, from 'Input/y4m/old_town_cross_2160p50.y4m':
+  Duration: 00:00:10.00, start: 0.000000, bitrate: 4976642 kb/s
+    Stream #0:0: Video: rawvideo (I420 / 0x30323449), yuv420p(progressive), 3840x2160, SAR 1:1 DAR 16:9, 50 fps, 50 tbr, 50 tbn, 50 tbc
+[h264_nvenc @ 0x42aa120] The variable bitrate rate-control requires the 'qmin' and/or 'qmax' option set.
+Output #0, matroska, to 'Output/NVENCh264/encoded/old_town_cross_2160p50llhq1500k.mkv':
+  Metadata:
+    encoder         : Lavf57.57.100
+    Stream #0:0: Video: h264 (h264_nvenc) (Main) (H264 / 0x34363248), yuv420p, 3840x2160 [SAR 1:1 DAR 16:9], q=-1--1, 1500 kb/s, 50 fps, 1k tbn, 50 tbc
+    Metadata:
+      encoder         : Lavc57.66.101 h264_nvenc
+    Side data:
+      cpb: bitrate max/min/avg: 0/0/1500000 buffer size: 3000000 vbv_delay: -1
+Stream mapping:
+  Stream #0:0 -> #0:0 (rawvideo (native) -> h264 (h264_nvenc))
+Press [q] to stop, [?] for help
+frame=   13 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    frame=   31 fps= 27 q=43.0 size=       1kB time=00:00:00.00 bitrate=5960.0kbits/s speed=0.000859x    frame=   43 fps= 24 q=48.0 size=       1kB time=00:00:00.24 bitrate=  24.7kbits/s speed=0.136x    frame=   61 fps= 27 q=49.0 size=       1kB time=00:00:00.60 bitrate=   9.9kbits/s speed=0.263x    frame=   79 fps= 28 q=49.0 size=       1kB time=00:00:00.96 bitrate=   6.2kbits/s speed=0.344x    frame=   97 fps= 29 q=49.0 size=       1kB time=00:00:01.32 bitrate=   4.5kbits/s speed=0.399x    frame=  115 fps= 30 q=49.0 size=       1kB time=00:00:01.68 bitrate=   3.5kbits/s speed=0.439x    frame=  133 fps= 31 q=49.0 size=       1kB time=00:00:02.04 bitrate=   2.9kbits/s speed=0.47x    frame=  151 fps= 31 q=49.0 size=       1kB time=00:00:02.40 bitrate=   2.5kbits/s speed=0.494x    frame=  169 fps= 31 q=49.0 size=       1kB time=00:00:02.76 bitrate=   2.2kbits/s speed=0.514x    frame=  187 fps= 32 q=49.0 size=       1kB time=00:00:03.12 bitrate=   1.9kbits/s speed=0.53x    frame=  205 fps= 32 q=49.0 size=       1kB time=00:00:03.48 bitrate=   1.7kbits/s speed=0.544x    frame=  223 fps= 32 q=49.0 size=       1kB time=00:00:03.84 bitrate=   1.6kbits/s speed=0.556x    frame=  230 fps= 31 q=49.0 size=       1kB time=00:00:03.98 bitrate=   1.5kbits/s speed=0.536x    frame=  242 fps= 30 q=49.0 size=       1kB time=00:00:04.22 bitrate=   1.4kbits/s speed=0.525x    frame=  260 fps= 30 q=49.0 size=       1kB time=00:00:04.58 bitrate=   1.3kbits/s speed=0.536x    frame=  278 fps= 31 q=49.0 size=       1kB time=00:00:04.94 bitrate=   1.2kbits/s speed=0.545x    frame=  296 fps= 31 q=49.0 size=    1173kB time=00:00:05.30 bitrate=1812.1kbits/s speed=0.554x    frame=  314 fps= 31 q=49.0 size=    1173kB time=00:00:05.66 bitrate=1696.9kbits/s speed=0.561x    frame=  325 fps= 31 q=49.0 size=    1173kB time=00:00:05.88 bitrate=1633.4kbits/s speed=0.552x    frame=  343 fps= 31 q=49.0 size=    1173kB time=00:00:06.24 bitrate=1539.2kbits/s speed=0.559x    frame=  354 fps= 30 q=49.0 size=    1173kB time=00:00:06.46 bitrate=1486.8kbits/s speed=0.55x    frame=  372 fps= 30 q=49.0 size=    1173kB time=00:00:06.82 bitrate=1408.3kbits/s speed=0.556x    frame=  390 fps= 30 q=49.0 size=    1173kB time=00:00:07.18 bitrate=1337.7kbits/s speed=0.561x    frame=  408 fps= 31 q=49.0 size=    1173kB time=00:00:07.54 bitrate=1273.8kbits/s speed=0.567x    frame=  420 fps= 30 q=49.0 size=    1173kB time=00:00:07.78 bitrate=1234.5kbits/s speed=0.559x    frame=  438 fps= 30 q=49.0 size=    1173kB time=00:00:08.14 bitrate=1179.9kbits/s speed=0.564x    frame=  456 fps= 31 q=49.0 size=    1173kB time=00:00:08.50 bitrate=1130.0kbits/s speed=0.569x    frame=  474 fps= 31 q=49.0 size=    1173kB time=00:00:08.86 bitrate=1084.1kbits/s speed=0.573x    frame=  492 fps= 31 q=49.0 size=    1173kB time=00:00:09.22 bitrate=1041.7kbits/s speed=0.577x    frame=  500 fps= 31 q=49.0 Lsize=    2600kB time=00:00:09.98 bitrate=2134.3kbits/s speed=0.614x    
+video:2596kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.162947%
+bench: utime=1.188s
+bench: maxrss=1396696kB
