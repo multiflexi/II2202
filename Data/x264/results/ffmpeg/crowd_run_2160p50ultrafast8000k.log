@@ -1,0 +1,46 @@
+ffmpeg started on 2016-12-04 at 02:02:49
+Report written to "Output/x264/results/ffmpeg/crowd_run_2160p50ultrafast8000k.log"
+Command line:
+Tools/ffmpeg/ffmpeg -benchmark -y -i Input/y4m/crowd_run_2160p50.y4m -c:v libx264 -preset ultrafast -b:v 8000k -an Output/x264/encoded/crowd_run_2160p50ultrafast8000k.mkv
+ffmpeg version N-82227-gdb23fde Copyright (c) 2000-2016 the FFmpeg developers
+  built with gcc 5.4.0 (Ubuntu 5.4.0-6ubuntu1~16.04.2) 20160609
+  configuration: --prefix=/home/jaroslav/ffmpeg_build --pkg-config-flags=--static --extra-cflags=-I/home/jaroslav/ffmpeg_build/include --extra-ldflags=-L/home/jaroslav/ffmpeg_build/lib --bindir=/home/jaroslav/bin --enable-gpl --enable-libass --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-nvenc --enable-libmfx --enable-libxvid --enable-libgsm --enable-libopencore-amrnb --enable-version3 --enable-nonfree
+  libavutil      55. 35.100 / 55. 35.100
+  libavcodec     57. 66.101 / 57. 66.101
+  libavformat    57. 57.100 / 57. 57.100
+  libavdevice    57.  2.100 / 57.  2.100
+  libavfilter     6. 66.100 /  6. 66.100
+  libswscale      4.  3.100 /  4.  3.100
+  libswresample   2.  4.100 /  2.  4.100
+  libpostproc    54.  2.100 / 54.  2.100
+Input #0, yuv4mpegpipe, from 'Input/y4m/crowd_run_2160p50.y4m':
+  Duration: 00:00:10.00, start: 0.000000, bitrate: 4976642 kb/s
+    Stream #0:0: Video: rawvideo (I420 / 0x30323449), yuv420p(progressive), 3840x2160, SAR 1:1 DAR 16:9, 50 fps, 50 tbr, 50 tbn, 50 tbc
+[libx264 @ 0x37b31c0] using SAR=1/1
+[libx264 @ 0x37b31c0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 AVX2 LZCNT BMI2
+[libx264 @ 0x37b31c0] profile Constrained Baseline, level 5.2
+[libx264 @ 0x37b31c0] 264 - core 148 - H.264/MPEG-4 AVC codec - Copyleft 2003-2016 - http://www.videolan.org/x264.html - options: cabac=0 ref=1 deblock=0:0:0 analyse=0:0 me=dia subme=0 psy=1 psy_rd=1.00:0.00 mixed_ref=0 me_range=16 chroma_me=1 trellis=0 8x8dct=0 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=0 threads=6 lookahead_threads=1 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=0 weightp=0 keyint=250 keyint_min=25 scenecut=0 intra_refresh=0 rc=abr mbtree=0 bitrate=8000 ratetol=1.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=0
+Output #0, matroska, to 'Output/x264/encoded/crowd_run_2160p50ultrafast8000k.mkv':
+  Metadata:
+    encoder         : Lavf57.57.100
+    Stream #0:0: Video: h264 (libx264) (H264 / 0x34363248), yuv420p, 3840x2160 [SAR 1:1 DAR 16:9], q=-1--1, 8000 kb/s, 50 fps, 1k tbn, 50 tbc
+    Metadata:
+      encoder         : Lavc57.66.101 libx264
+    Side data:
+      cpb: bitrate max/min/avg: 0/0/8000000 buffer size: 0 vbv_delay: -1
+Stream mapping:
+  Stream #0:0 -> #0:0 (rawvideo (native) -> h264 (libx264))
+Press [q] to stop, [?] for help
+frame=   50 fps=0.0 q=49.0 size=       1kB time=00:00:00.84 bitrate=   7.0kbits/s speed=1.64x    frame=   99 fps= 97 q=49.0 size=       1kB time=00:00:01.82 bitrate=   3.2kbits/s speed=1.78x    frame=  147 fps= 96 q=48.0 size=       1kB time=00:00:02.78 bitrate=   2.1kbits/s speed=1.82x    frame=  195 fps= 96 q=48.0 size=       1kB time=00:00:03.74 bitrate=   1.6kbits/s speed=1.84x    frame=  242 fps= 95 q=48.0 size=       1kB time=00:00:04.68 bitrate=   1.3kbits/s speed=1.85x    frame=  288 fps= 95 q=48.0 size=    4903kB time=00:00:05.60 bitrate=7170.5kbits/s speed=1.84x    frame=  337 fps= 95 q=49.0 size=    4903kB time=00:00:06.58 bitrate=6102.7kbits/s speed=1.85x    frame=  385 fps= 95 q=48.0 size=    4903kB time=00:00:07.54 bitrate=5325.8kbits/s speed=1.86x    frame=  433 fps= 95 q=48.0 size=    4903kB time=00:00:08.50 bitrate=4724.4kbits/s speed=1.86x    frame=  480 fps= 95 q=48.0 size=    4903kB time=00:00:09.44 bitrate=4254.0kbits/s speed=1.86x    frame=  500 fps= 94 q=-1.0 Lsize=    9887kB time=00:00:09.98 bitrate=8115.0kbits/s speed=1.87x    
+video:9883kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.047531%
+bench: utime=19.264s
+bench: maxrss=370224kB
+[libx264 @ 0x37b31c0] frame I:2     Avg QP:45.50  size:112611
+[libx264 @ 0x37b31c0] frame P:498   Avg QP:48.16  size: 19867
+[libx264 @ 0x37b31c0] mb I  I16..4: 100.0%  0.0%  0.0%
+[libx264 @ 0x37b31c0] mb P  I16..4:  8.3%  0.0%  0.0%  P16..4: 14.2%  0.0%  0.0%  0.0%  0.0%    skip:77.5%
+[libx264 @ 0x37b31c0] final ratefactor: 42.08
+[libx264 @ 0x37b31c0] coded y,uvDC,uvAC intra: 2.3% 45.1% 10.1% inter: 0.7% 4.1% 0.0%
+[libx264 @ 0x37b31c0] i16 v,h,dc,p: 42% 23% 24% 11%
+[libx264 @ 0x37b31c0] i8c dc,h,v,p: 73%  8% 16%  2%
+[libx264 @ 0x37b31c0] kb/s:8095.28
