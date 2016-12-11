@@ -144,37 +144,39 @@ function evaluate_x265
     height=
     width=
 
-    for v in "${video[@]}"; do
-        for p in "${preset[@]}"; do
-            for b in "${bitrate[@]}"; do
-                echo -e "\e[92mStarting power consumption logging\e[0m"
+for p in "${preset[@]}"; do
+        for b in "${bitrate[@]}"; do
+            for v in "${video[@]}"; do
+                echo -e $(date -u) "\e[92mStarting power consumption logging\e[0m"
                 modprobe msr
                 modprobe cpuid
                 Tools/power_gadget/power_gadget -e 1000 > Output/x265/results/powergadget/$v$p$b.csv &
-                nvidia-smi -i 0 -l 1 --query-gpu=timestamp,pstate,temperature.gpu,utilization.gpu,memory.used,clocks.current.video,clocks.current.graphics,clocks.current.sm,fan.speed,power.draw --format=csv -f Output/x265/results/nvidiasmi/$v$p$b.csv &
-                echo -e "\e[92mStarting Encoding\e[0m"
+                echo -e $(date -u) "\e[92mStarting Encoding\e[0m"
                 FFREPORT=file=Output/x265/results/ffmpeg/$v$p$b.log:level=32 Tools/ffmpeg/ffmpeg -benchmark -y -i Input/y4m/$v.y4m -c:v libx265 -preset $p -b:v $b -an Output/x265/encoded/$v$p$b.mkv
-                echo -e "\e[93mDone with encoding\e[0m"
+                echo -e $(date -u) "\e[93mDone with encoding\e[0m"
                 pkill -f power_gadget
-                pkill -f nvidia-smi
-                echo -e "\e[93mDone with power consumption logging\e[0m"
-                echo -e "\e[92mStarting Transcoding\e[0m"
+                echo -e $(date -u) "\e[93mDone with power consumption logging\e[0m"
+                echo -e $(date -u) "\e[92mStarting Transcoding\e[0m"
                 FFREPORT=file=Output/x265/results/ffmpeg/T$v$p$b.log:level=32 Tools/ffmpeg/ffmpeg -i Output/x265/encoded/$v$p$b.mkv -c:v rawvideo -pix_fmt yuv420p Output/x265/transcoded/$v$p$b.yuv
-                echo -e "\e[93mDone with transcoding\e[0m"
-                echo -e "\e[92mStarting evaluation with VQMT and VMAF\e[0m"
-                if [ "$v" == "${video[0]}" ] || [ "$v" == "${video[1]}" ]; then
+                echo -e $(date -u) "\e[93mDone with transcoding\e[0m"
+                 done
+	    for v in "${video[@]}"; do
+                echo -e $(date -u) "\e[92mStarting evaluation with VQMT and VMAF\e[0m"
+                if [ "$v" == "${video[0]}" ]; then
                     height=2160
                     width=3840
-                elif [ "$v" == "${video[2]}" ]; then
+                elif [ "$v" == "${video[1]}" ]; then
                     height=1744
                     width=4096
                 fi
                 Tools/vqmt/vqmt Input/yuv/$v.yuv Output/x265/transcoded/$v$p$b.yuv $height $width 500 1 Output/x265/results/vqmt/$v$p$b PSNRHVSM MSSSIM &
                 Tools/vmaf/run_vmaf yuv420p $width $height Input/yuv/$v.yuv Output/x265/transcoded/$v$p$b.yuv --out-fmt text > Output/x265/results/vmaf/$v$p$b &
-                wait ${!}
-                echo -e "\e[93mDone with evaluating with VQMT and VMAF\e[0m"
-                rm Output/x265/encoded/$v$p$b.mkv
-                rm Output/x265/transcoded/$v$p$b.yuv
+                 done
+		    wait 
+                echo -e $(date -u) "\e[93mDone with evaluating with VQMT and VMAF\e[0m"
+		for v in "${video[@]}"; do
+                	rm Output/x265/encoded/$v$p$b.mkv
+               		rm Output/x265/transcoded/$v$p$b.yuv
             done
         done
     done
@@ -500,7 +502,7 @@ for p in "${preset[@]}"; do
                 FFREPORT=file=Output/x264/results/ffmpeg/T$v$p$b.log:level=32 Tools/ffmpeg/ffmpeg -i Output/x264/encoded/$v$p$b.mkv -c:v rawvideo -pix_fmt yuv420p Output/x264/transcoded/$v$p$b.yuv
                 echo -e $(date -u) "\e[93mDone with transcoding\e[0m"
 	    done
-	    for v in "${video[@]}"; do
+	    for v in "${video[2]}"; do
                 echo -e $(date -u) "\e[92mStarting evaluation with VQMT and VMAF\e[0m"
                 if [ "$v" == "${video[0]}" ] || [ "$v" == "${video[1]}" ]; then
                     height=2160
@@ -514,7 +516,7 @@ for p in "${preset[@]}"; do
             done
 	    wait 
 	    echo -e $(date -u) "\e[93mDone with evaluating with VQMT and VMAF\e[0m"
-	    for v in "${video[@]}"; do
+	    for v in "${video[2]}"; do
                 rm Output/x264/encoded/$v$p$b.mkv
                 rm Output/x264/transcoded/$v$p$b.yuv
  	    done
