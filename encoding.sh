@@ -359,86 +359,88 @@ function evaluate_NVENCh265
 
 
 
-function evaluate_test
+function evaluate_theora
 {
 	bitrate=(500k 1000k 1500k 2000k 2500k 3000k 3500k 4000k 4500k 5000k 6000k 7000k 8000k 9000k 10000k 11000k 12000k 13000k 14000k 15000k)
 
-	if [ -d Output/test ]; then
-		echo "test folder already exists, check for results"
+	if [ -d Output/theora ]; then
+		echo "theora test folder already exists, check for results or delete it"
 		return
-	elif [ ! -d Output/test ]; then
-		mkdir Output/test
+	elif [ ! -d Output/theora ]; then
+		mkdir Output/theora
 	fi
 
-	if [ ! -d Output/test/encoded ]; then
-		mkdir Output/test/encoded
+	if [ ! -d Output/theora/encoded ]; then
+		mkdir Output/theora/encoded
 	fi
 
-	if [ ! -d Output/test/transcoded ]; then
-		mkdir Output/test/transcoded
+	if [ ! -d Output/theora/transcoded ]; then
+		mkdir Output/theora/transcoded
 	fi
 
-	if [ ! -d Output/test/results ]; then
-		mkdir Output/test/results
+	if [ ! -d Output/theora/results ]; then
+		mkdir Output/theora/results
 	fi
 
-	if [ ! -d Output/test/results/powergadget ]; then
-		mkdir Output/test/results/powergadget
+	if [ ! -d Output/theora/results/powergadget ]; then
+		mkdir Output/theora/results/powergadget
 	fi
 
-	if [ ! -d Output/test/results/ffmpeg ]; then
-		mkdir Output/test/results/ffmpeg
+	if [ ! -d Output/theora/results/ffmpeg ]; then
+		mkdir Output/theora/results/ffmpeg
 	fi
 
-	if [ ! -d Output/test/results/nvidiasmi ]; then
-		mkdir Output/test/results/nvidiasmi
+	if [ ! -d Output/theora/results/nvidiasmi ]; then
+		mkdir Output/theora/results/nvidiasmi
 	fi
 
-	if [ ! -d Output/test/results/vqmt ]; then
-		mkdir Output/test/results/vqmt
+	if [ ! -d Output/theora/results/vqmt ]; then
+		mkdir Output/theora/results/vqmt
 	fi
 
-	if [ ! -d Output/test/results/vmaf ]; then
-		mkdir Output/test/results/vmaf
+	if [ ! -d Output/theora/results/vmaf ]; then
+		mkdir Output/theora/results/vmaf
 	fi
 
 	height=
 	width=
-	for v in "${video[@]}"; do
-		
-			for b in "${bitrate[@]}"; do
-				echo -e "\e[92mStarting power consumption logging\e[0m"
-				modprobe msr
-				modprobe cpuid
-				Tools/power_gadget/power_gadget -e 1000 > Output/test/results/powergadget/$v$b.csv &
-				nvidia-smi -i 0 -l 1 --query-gpu=timestamp,pstate,temperature.gpu,utilization.gpu,memory.used,clocks.current.video,clocks.current.graphics,clocks.current.sm,fan.speed,power.draw --format=csv -f Output/test/results/nvidiasmi/$v$b.csv &
-				echo -e "\e[92mStarting Encoding\e[0m"
-				FFREPORT=file=Output/test/results/ffmpeg/$v$b.log:level=32 Tools/ffmpeg/ffmpeg -benchmark -y -i Input/y4m/$v.y4m -c:v libtheora -b:v $b -an Output/test/encoded/$v$b.mkv
-				echo -e "\e[93mDone with encoding\e[0m"
-				pkill -f power_gadget
-				pkill -f nvidia-smi
-				echo -e "\e[93mDone with power consumption logging\e[0m"
-				echo -e "\e[92mStarting Transcoding\e[0m"
-				FFREPORT=file=Output/test/results/ffmpeg/T$v$b.log:level=32 Tools/ffmpeg/ffmpeg -i Output/test/encoded/$v$b.mkv -c:v rawvideo -pix_fmt yuv420p Output/test/transcoded/$v$b.yuv
-				echo -e "\e[93mDone with transcoding\e[0m"
-				echo -e "\e[92mStarting evaluation with VQMT and VMAF\e[0m"
-				if [ "$v" == "${video[0]}" ] || [ "$v" == "${video[1]}" ]; then
-					height=2160
-					width=3840
-				elif [ "$v" == "${video[2]}" ]; then 
-					height=1744
-					width=4096
-				fi
-				Tools/vqmt/vqmt Input/yuv/$v.yuv Output/test/transcoded/$v$b.yuv $height $width 500 1 Output/test/results/vqmt/$v$b PSNRHVSM MSSSIM &
-				Tools/vmaf/run_vmaf yuv420p $width $height Input/yuv/$v.yuv Output/test/transcoded/$v$b.yuv --out-fmt text > Output/test/results/vmaf/$v$b &
-				wait ${!}
-				echo -e "\e[93mDone with evaluating with VQMT and VMAF\e[0m"
-				rm Output/test/encoded/$v$b.mkv
-				rm Output/test/transcoded/$v$b.yuv
+for p in "${preset[@]}"; do
+        for b in "${bitrate[@]}"; do
+            for v in "${video[@]}"; do
+			echo -e $(date -u) "\e[92mStarting power consumption logging\e[0m"
+			modprobe msr
+			modprobe cpuid
+			Tools/power_gadget/power_gadget -e 1000 > Output/theora/results/powergadget/$v$b.csv &
+			echo -e $(date -u) "\e[92mStarting Encoding\e[0m"
+			FFREPORT=file=Output/theora/results/ffmpeg/$v$b.log:level=32 Tools/ffmpeg/ffmpeg -benchmark -y -i Input/y4m/$v.y4m -c:v libtheora -b:v $b -an Output/theora/encoded/$v$b.mkv
+			echo -e $(date -u) "\e[93mDone with encoding\e[0m"
+			pkill -f power_gadget
+			pkill -f nvidia-smi
+			echo -e $(date -u) "\e[93mDone with power consumption logging\e[0m"
+			echo -e $(date -u) "\e[92mStarting Transcoding\e[0m"
+			FFREPORT=file=Output/theora/results/ffmpeg/T$v$b.log:level=32 Tools/ffmpeg/ffmpeg -i Output/theora/encoded/$v$b.mkv -c:v rawvideo -pix_fmt yuv420p Output/theora/transcoded/$v$b.yuv
+			echo -e $(date -u) "\e[93mDone with transcoding\e[0m"
 			done
-	chmod -R 777 Output/test	
-			
-	done	
+			for v in "${video[@]}"; do
+				echo -e $(date -u) "\e[92mStarting evaluation with VQMT and VMAF\e[0m"
+				if [ "$v" == "${video[0]}" ] || [ "$v" == "${video[1]}" ]; then
+				    height=2160
+				    width=3840
+				elif [ "$v" == "${video[2]}" ]; then
+				    height=1744
+				    width=4096
+				fi
+			Tools/vqmt/vqmt Input/yuv/$v.yuv Output/theora/transcoded/$v$b.yuv $height $width 500 1 Output/theora/results/vqmt/$v$b PSNRHVSM MSSSIM &
+			Tools/vmaf/run_vmaf yuv420p $width $height Input/yuv/$v.yuv Output/theora/transcoded/$v$b.yuv --out-fmt text > Output/theora/results/vmaf/$v$b &
+			done
+   			wait 
+		    	echo -e $(date -u) "\e[93mDone with evaluating with VQMT and VMAF\e[0m"
+			for v in "${video[@]}"; do
+		        	rm Output/theora/encoded/$v$p$b.mkv
+		                rm Output/theora/transcoded/$v$p$b.yuv
+		done
+	done			
+done	
 	
 }
 
@@ -536,7 +538,7 @@ until [ "$selection" = "0" ]; do
 	echo "4 - NVENC h265"
 	echo "5 - QSV h264" 
 	echo ""
-	echo "6 - Test"
+	echo "6 - Theora"
 	echo "7 - Temp"
 	echo "0 - Exit"
 	echo "" 
@@ -548,7 +550,7 @@ until [ "$selection" = "0" ]; do
 		3 ) evaluate_NVENCh264; press_enter;;
 		4 ) evaluate_NVENCh265; press_enter;;
 		5 ) echo "evaluate_QSVh264"; press_enter;;
-		6 ) evaluate_test; press_enter;;
+		6 ) evaluate_theora; press_enter;;
 		7 ) evaluate_temp; press_enter;;
 		0 ) exit;;
 		* ) echo "Selection not valid"; press_enter;
