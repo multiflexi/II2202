@@ -217,7 +217,7 @@ Whole process was done for all codecs as follows:
 	\item Encoded video is trans-coded to YUV420P
 	\item Quality is measured
 \end{enumerate}
-This is done for all three chosen sequences, all chosen codecs and all presets available in bit-rates from \textsc{\SI{500}{\kilo\bit\per\second}} to \SI{5000}{\kilo\bit\per\second} with \SI{500}{\kilo\bit} steps and then up to \SI{15000}{\kilo\bit\per\second} with \SI{1000}{\kilo\bit} steps. Total number of encodes is (480 so far). For quality evaluation we chose 3 methods: \acrshort{psnrhvsm} and \acrshort{msssim}, both measured by \acrshort{vqmt}, and then \acrshort{vmaf}. Power consumption was measured by Intel Power Gadget which provides cumulative energy consumption in \SI{}{\milli\watt\hour}. Power consumption of GPU was measured by \acrfull{nvidiasmi}. Because this tool does not provide cumulative values, measurement was done \SI{1}{\second} intervals and then summed and converted to \SI{}{\milli\watt\hour}.
+This is done for all three chosen sequences, all chosen codecs and all presets available in bit-rates from \textsc{\SI{500}{\kilo\bit\per\second}} to \SI{5000}{\kilo\bit\per\second} with \SI{500}{\kilo\bit} steps and then up to \SI{15000}{\kilo\bit\per\second} with \SI{1000}{\kilo\bit} steps. Total number of encodes is (1080 so far). For quality evaluation we chose 3 methods: \acrshort{psnrhvsm} and \acrshort{msssim}, both measured by \acrshort{vqmt}, and then \acrshort{vmaf}. Power consumption was measured by Intel Power Gadget which provides cumulative energy consumption in \SI{}{\milli\watt\hour}. Power consumption of GPU was measured by \acrfull{nvidiasmi}. Because this tool does not provide cumulative values, measurement was done \SI{1}{\second} intervals and then summed and converted to \SI{}{\milli\watt\hour}.
 
 Information about used software provides table \ref{tab:sw}. Information about used hardware provides table \ref{tab:hw}.
 \begin{table}[h]
@@ -262,37 +262,47 @@ Information about used software provides table \ref{tab:sw}. Information about u
 \end{table}
 \section{Results and Analysis}
 \label{sec:results}
-\begin{figure}[h]
+\subsection{h264\_nvenc}
+
+\begin{figure}[!h]
 	\vspace{-10pt}
 	\centering
-	\includegraphics[width=\textwidth]{img/h264nvencvmafcrowd.eps}
-	\caption{VMAF results of sequence Crowd Run}
-	\label{fig:h264nvencvmafcrowd}
+	\includegraphics[width=0.9\textwidth]{img/h264_nvencoldtTownCrossPCR.eps}
+	\caption{h264\_nvenc PCR for old\_town\_cross}
+	\label{fig:h264_nvencoldtTownCrossPCR}
 \end{figure}
 \begin{figure}[!h]
-	\vspace{-5pt}
+	\vspace{-10pt}
 	\centering
-	\includegraphics[width=\textwidth]{img/h264nvencvmafsintel.eps}
-	\caption{VMAF results of sequence Sintel}
-	\label{fig:h264nvencvmafsintel}
+	\includegraphics[width=0.9\textwidth]{img/h264_nvencCrowdRunPCR.eps}
+	\caption{h264\_nvenc PCR for crowd\_run}
+	\label{fig:h264_nvencCrowdRunPCR}
 \end{figure}
 \begin{figure}[!h]
-	\vspace{0pt}
+	\vspace{-10pt}
 	\centering
-	\includegraphics[width=\textwidth]{img/h264nvencintelsintel.eps}
-	\caption{Power consumption of CPU during encoding of Sintel}
-	\label{fig:h264nvencintelsintel}
+	\includegraphics[width=0.9\textwidth]{img/h264_nvencSintelPCR.eps}
+	\caption{h264\_nvenc PCR for sintel}
+	\label{fig:h264_nvencSintelPCR}
 \end{figure}
-
+\subsection{x264}
+\begin{figure}[!h]
+	\vspace{-10pt}
+	\centering
+	\includegraphics[width=0.9\textwidth]{img/x264oldtTownCrossPCR.eps}
+	\caption{x264 PCR for old\_town\_cross}
+	\label{fig:x264oldtTownCrossPCR}
+\end{figure}
+\newpage
 \section{Discussion}
 \label{sec:discussion}
 xxxxx xxxx xxxx 
-
+\newpage
 \printbibliography
 \appendix
 \section{Annex}
-Compile script
-\lstinputlisting[frame=single,breaklines=true]{compile.sh}
+%Compile script
+%\lstinputlisting[frame=single,breaklines=true]{compile.sh}
 Encoding script
 \lstinputlisting[frame=single,breaklines=true]{encoding.sh}
 

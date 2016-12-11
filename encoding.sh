@@ -1,4 +1,6 @@
 #! /bin/bash
+# "old_town_cross_2160p50" "crowd_run_2160p50" 
+# ultrafast superfast
 
 video=("old_town_cross_2160p50" "crowd_run_2160p50" "sintel")
 
@@ -54,11 +56,10 @@ function evaluate_x264
 
     height=
     width=
-
-    for v in "${video[@]}"; do
-        for p in "${preset[@]}"; do
-            for b in "${bitrate[@]}"; do
-                echo -e "\e[92mStarting power consumption logging\e[0m"
+for p in "${preset[@]}"; do
+        for b in "${bitrate[@]}"; do
+            for v in "${video[@]}"; do
+                echo -e $(date -u) "\e[92mStarting power consumption logging\e[0m"
                 modprobe msr
                 modprobe cpuid
                 Tools/power_gadget/power_gadget -e 1000 > Output/x264/results/powergadget/$v$p$b.csv &
@@ -70,25 +71,29 @@ function evaluate_x264
                 echo -e $(date -u) "\e[92mStarting Transcoding\e[0m"
                 FFREPORT=file=Output/x264/results/ffmpeg/T$v$p$b.log:level=32 Tools/ffmpeg/ffmpeg -i Output/x264/encoded/$v$p$b.mkv -c:v rawvideo -pix_fmt yuv420p Output/x264/transcoded/$v$p$b.yuv
                 echo -e $(date -u) "\e[93mDone with transcoding\e[0m"
+	    done
+	    for v in "${video[@]}"; do
                 echo -e $(date -u) "\e[92mStarting evaluation with VQMT and VMAF\e[0m"
-                if [ "$v" == "${video[0]}" ] || [ "$v" == "${video[1]}" ]; then
+                if [ "$v" == "${video[0]}" ]; then
                     height=2160
                     width=3840
-                elif [ "$v" == "${video[2]}" ]; then
+                elif [ "$v" == "${video[1]}" ]; then
                     height=1744
                     width=4096
                 fi
-                Tools/vqmt/vqmt Input/yuv/$v.yuv Output/x264/transcoded/$v$p$b.yuv $height $width 500 1 Output/x264/results/vqmt/$v$p$b PSNRHVSM MSSSIM &
+                 Tools/vqmt/vqmt Input/yuv/$v.yuv Output/x264/transcoded/$v$p$b.yuv $height $width 500 1 Output/x264/results/vqmt/$v$p$b PSNRHVSM MSSSIM &
                 Tools/vmaf/run_vmaf yuv420p $width $height Input/yuv/$v.yuv Output/x264/transcoded/$v$p$b.yuv --out-fmt text > Output/x264/results/vmaf/$v$p$b &
-                wait ${!}
-                echo -e $(date -u) "\e[93mDone with evaluating with VQMT and VMAF\e[0m"
+            done
+	    wait 
+	    echo -e $(date -u) "\e[93mDone with evaluating with VQMT and VMAF\e[0m"
+	    for v in "${video[@]}"; do
                 rm Output/x264/encoded/$v$p$b.mkv
                 rm Output/x264/transcoded/$v$p$b.yuv
-            done
+ 	    done
         done
     done
-
 }
+
 
 function evaluate_x265
 {
@@ -435,6 +440,88 @@ function evaluate_test
 	
 }
 
+function evaluate_temp
+{
+    bitrate=(500k 1000k 1500k 2000k 2500k 3000k 3500k 4000k 4500k 5000k 6000k 7000k 8000k 9000k 10000k 11000k 12000k 13000k 14000k 15000k)
+    preset=(ultrafast superfast)
+
+    if [ -d Output/x264 ]; then
+        echo "test folder already exists, check for results"
+        return
+    elif [ ! -d Output/x264 ]; then
+        mkdir Output/x264
+    fi
+
+    if [ ! -d Output/x264/encoded ]; then
+        mkdir Output/x264/encoded
+    fi
+
+    if [ ! -d Output/x264/transcoded ]; then
+        mkdir Output/x264/transcoded
+    fi
+
+    if [ ! -d Output/x264/results ]; then
+        mkdir Output/x264/results
+    fi
+
+    if [ ! -d Output/x264/results/powergadget ]; then
+        mkdir Output/x264/results/powergadget
+    fi
+
+    if [ ! -d Output/x264/results/ffmpeg ]; then
+        mkdir Output/x264/results/ffmpeg
+    fi
+
+    if [ ! -d Output/x264/results/vqmt ]; then
+        mkdir Output/x264/results/vqmt
+    fi
+
+    if [ ! -d Output/x264/results/vmaf ]; then
+        mkdir Output/x264/results/vmaf
+    fi
+
+    chmod -R 777 Output/x264
+
+    height=
+    width=
+for p in "${preset[@]}"; do
+        for b in "${bitrate[@]}"; do
+            for v in "${video[2]}"; do
+                echo -e $(date -u) "\e[92mStarting power consumption logging\e[0m"
+                modprobe msr
+                modprobe cpuid
+                Tools/power_gadget/power_gadget -e 1000 > Output/x264/results/powergadget/$v$p$b.csv &
+                echo -e $(date -u) "\e[92mStarting Encoding\e[0m"
+                FFREPORT=file=Output/x264/results/ffmpeg/$v$p$b.log:level=32 Tools/ffmpeg/ffmpeg -benchmark -y -i Input/y4m/$v.y4m -c:v libx264 -preset $p -b:v $b -an Output/x264/encoded/$v$p$b.mkv
+                echo -e $(date -u) "\e[93mDone with encoding\e[0m"
+                pkill -f power_gadget
+                echo -e $(date -u) "\e[93mDone with power consumption logging\e[0m"
+                echo -e $(date -u) "\e[92mStarting Transcoding\e[0m"
+                FFREPORT=file=Output/x264/results/ffmpeg/T$v$p$b.log:level=32 Tools/ffmpeg/ffmpeg -i Output/x264/encoded/$v$p$b.mkv -c:v rawvideo -pix_fmt yuv420p Output/x264/transcoded/$v$p$b.yuv
+                echo -e $(date -u) "\e[93mDone with transcoding\e[0m"
+	    done
+	    for v in "${video[@]}"; do
+                echo -e $(date -u) "\e[92mStarting evaluation with VQMT and VMAF\e[0m"
+                if [ "$v" == "${video[0]}" ] || [ "$v" == "${video[1]}" ]; then
+                    height=2160
+                    width=3840
+                elif [ "$v" == "${video[2]}" ]; then
+                    height=1744
+                    width=4096
+                fi
+                 Tools/vqmt/vqmt Input/yuv/$v.yuv Output/x264/transcoded/$v$p$b.yuv $height $width 500 1 Output/x264/results/vqmt/$v$p$b PSNRHVSM MSSSIM &
+                Tools/vmaf/run_vmaf yuv420p $width $height Input/yuv/$v.yuv Output/x264/transcoded/$v$p$b.yuv --out-fmt text > Output/x264/results/vmaf/$v$p$b &
+            done
+	    wait 
+	    echo -e $(date -u) "\e[93mDone with evaluating with VQMT and VMAF\e[0m"
+	    for v in "${video[@]}"; do
+                rm Output/x264/encoded/$v$p$b.mkv
+                rm Output/x264/transcoded/$v$p$b.yuv
+ 	    done
+        done
+    done
+}
+
 
 selection=
 
@@ -448,6 +535,7 @@ until [ "$selection" = "0" ]; do
 	echo "5 - QSV h264" 
 	echo ""
 	echo "6 - Test"
+	echo "7 - Temp"
 	echo "0 - Exit"
 	echo "" 
 	echo -n "Enter selection: "
@@ -459,6 +547,7 @@ until [ "$selection" = "0" ]; do
 		4 ) evaluate_NVENCh265; press_enter;;
 		5 ) echo "evaluate_QSVh264"; press_enter;;
 		6 ) evaluate_test; press_enter;;
+		7 ) evaluate_temp; press_enter;;
 		0 ) exit;;
 		* ) echo "Selection not valid"; press_enter;
 	esac
