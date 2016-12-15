@@ -1,0 +1,35 @@
+ffmpeg started on 2016-12-12 at 10:57:02
+Report written to "Output/theora/results/ffmpeg/Tcrowd_run_2160p5014000k.log"
+Command line:
+Tools/ffmpeg/ffmpeg -i Output/theora/encoded/crowd_run_2160p5014000k.mkv -c:v rawvideo -pix_fmt yuv420p Output/theora/transcoded/crowd_run_2160p5014000k.yuv
+ffmpeg version N-82227-gdb23fde Copyright (c) 2000-2016 the FFmpeg developers
+  built with gcc 5.4.0 (Ubuntu 5.4.0-6ubuntu1~16.04.2) 20160609
+  configuration: --prefix=/home/jaroslav/ffmpeg_build --pkg-config-flags=--static --extra-cflags=-I/home/jaroslav/ffmpeg_build/include --extra-ldflags=-L/home/jaroslav/ffmpeg_build/lib --bindir=/home/jaroslav/bin --enable-gpl --enable-libass --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libx265 --enable-nvenc --enable-libmfx --enable-libxvid --enable-libgsm --enable-libopencore-amrnb --enable-version3 --enable-nonfree
+  libavutil      55. 35.100 / 55. 35.100
+  libavcodec     57. 66.101 / 57. 66.101
+  libavformat    57. 57.100 / 57. 57.100
+  libavdevice    57.  2.100 / 57.  2.100
+  libavfilter     6. 66.100 /  6. 66.100
+  libswscale      4.  3.100 /  4.  3.100
+  libswresample   2.  4.100 /  2.  4.100
+  libpostproc    54.  2.100 / 54.  2.100
+Input #0, matroska,webm, from 'Output/theora/encoded/crowd_run_2160p5014000k.mkv':
+  Metadata:
+    ENCODER         : Lavf57.57.100
+  Duration: 00:00:10.00, start: 0.000000, bitrate: 15340 kb/s
+    Stream #0:0: Video: theora, yuv420p(progressive), 3840x2160 [SAR 1:1 DAR 16:9], 50 fps, 50 tbr, 1k tbn, 50 tbc (default)
+    Metadata:
+      ENCODER         : Lavc57.66.101 libtheora
+      DURATION        : 00:00:10.000000000
+Output #0, rawvideo, to 'Output/theora/transcoded/crowd_run_2160p5014000k.yuv':
+  Metadata:
+    encoder         : Lavf57.57.100
+    Stream #0:0: Video: rawvideo (I420 / 0x30323449), yuv420p, 3840x2160 [SAR 1:1 DAR 16:9], q=2-31, 200 kb/s, 50 fps, 50 tbn, 50 tbc (default)
+    Metadata:
+      DURATION        : 00:00:10.000000000
+      encoder         : Lavc57.66.101 rawvideo
+Stream mapping:
+  Stream #0:0 -> #0:0 (theora (native) -> rawvideo (native))
+Press [q] to stop, [?] for help
+frame=   17 fps=0.0 q=-0.0 size=  206550kB time=00:00:00.34 bitrate=4976640.0kbits/s speed=0.661x    frame=   34 fps= 33 q=-0.0 size=  413100kB time=00:00:00.68 bitrate=4976640.0kbits/s speed=0.665x    frame=   51 fps= 33 q=-0.0 size=  619650kB time=00:00:01.02 bitrate=4976640.0kbits/s speed=0.665x    frame=   68 fps= 33 q=-0.0 size=  826200kB time=00:00:01.36 bitrate=4976640.0kbits/s speed=0.666x    frame=   85 fps= 33 q=-0.0 size= 1032750kB time=00:00:01.70 bitrate=4976640.0kbits/s speed=0.666x    frame=  102 fps= 33 q=-0.0 size= 1239300kB time=00:00:02.04 bitrate=4976640.0kbits/s speed=0.666x    frame=  119 fps= 33 q=-0.0 size= 1445850kB time=00:00:02.38 bitrate=4976640.0kbits/s speed=0.666x    frame=  136 fps= 33 q=-0.0 size= 1652400kB time=00:00:02.72 bitrate=4976640.0kbits/s speed=0.666x    frame=  153 fps= 33 q=-0.0 size= 1858950kB time=00:00:03.06 bitrate=4976640.0kbits/s speed=0.665x    frame=  170 fps= 33 q=-0.0 size= 2065500kB time=00:00:03.40 bitrate=4976640.0kbits/s speed=0.666x    frame=  187 fps= 33 q=-0.0 size= 2272050kB time=00:00:03.74 bitrate=4976640.0kbits/s speed=0.665x    frame=  204 fps= 33 q=-0.0 size= 2478600kB time=00:00:04.08 bitrate=4976640.0kbits/s dup=5 drop=0 speed=0.666x    frame=  223 fps= 33 q=-0.0 size= 2709450kB time=00:00:04.46 bitrate=4976640.0kbits/s dup=14 drop=0 speed=0.666x    frame=  241 fps= 33 q=-0.0 size= 2928150kB time=00:00:04.82 bitrate=4976640.0kbits/s dup=21 drop=0 speed=0.666x    frame=  258 fps= 33 q=-0.0 size= 3134700kB time=00:00:05.16 bitrate=4976640.0kbits/s dup=29 drop=0 speed=0.666x    frame=  274 fps= 33 q=-0.0 size= 3329100kB time=00:00:05.48 bitrate=4976640.0kbits/s dup=36 drop=0 speed=0.662x    frame=  289 fps= 33 q=-0.0 size= 3511350kB time=00:00:05.78 bitrate=4976640.0kbits/s dup=42 drop=0 speed=0.657x    frame=  307 fps= 33 q=-0.0 size= 3730050kB time=00:00:06.14 bitrate=4976640.0kbits/s dup=51 drop=0 speed=0.651x    frame=  323 fps= 32 q=-0.0 size= 3924450kB time=00:00:06.46 bitrate=4976640.0kbits/s dup=59 drop=0 speed=0.645x    frame=  333 fps= 32 q=-0.0 size= 4045950kB time=00:00:06.66 bitrate=4976640.0kbits/s dup=64 drop=0 speed=0.632x    frame=  349 fps= 32 q=-0.0 size= 4240350kB time=00:00:06.98 bitrate=4976640.0kbits/s dup=71 drop=0 speed=0.632x    frame=  366 fps= 31 q=-0.0 size= 4446900kB time=00:00:07.32 bitrate=4976640.0kbits/s dup=80 drop=0 speed=0.63x    frame=  378 fps= 31 q=-0.0 size= 4592700kB time=00:00:07.56 bitrate=4976640.0kbits/s dup=86 drop=0 speed=0.62x    frame=  395 fps= 31 q=-0.0 size= 4799250kB time=00:00:07.90 bitrate=4976640.0kbits/s dup=95 drop=0 speed=0.62x    frame=  405 fps= 30 q=-0.0 size= 4920750kB time=00:00:08.10 bitrate=4976640.0kbits/s dup=101 drop=0 speed=0.61x    frame=  421 fps= 30 q=-0.0 size= 5115150kB time=00:00:08.42 bitrate=4976640.0kbits/s dup=110 drop=0 speed=0.604x    frame=  439 fps= 30 q=-0.0 size= 5333850kB time=00:00:08.78 bitrate=4976640.0kbits/s dup=121 drop=0 speed=0.604x    frame=  453 fps= 30 q=-0.0 size= 5503950kB time=00:00:09.06 bitrate=4976640.0kbits/s dup=129 drop=0 speed=0.602x    frame=  463 fps= 30 q=-0.0 size= 5625450kB time=00:00:09.26 bitrate=4976640.0kbits/s dup=135 drop=0 speed=0.59x    frame=  477 fps= 29 q=-0.0 size= 5795550kB time=00:00:09.54 bitrate=4976640.0kbits/s dup=143 drop=0 speed=0.589x    frame=  497 fps= 30 q=-0.0 size= 6038550kB time=00:00:09.94 bitrate=4976640.0kbits/s dup=153 drop=0 speed=0.594x    frame=  500 fps= 29 q=-0.0 Lsize= 6075000kB time=00:00:10.00 bitrate=4976640.0kbits/s dup=154 drop=0 speed=0.587x    
+video:6075000kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: 0.000000%
