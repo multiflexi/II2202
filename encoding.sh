@@ -1,6 +1,4 @@
 #! /bin/bash
-# "old_town_cross_2160p50" "crowd_run_2160p50" 
-# ultrafast superfast
 
 video=("old_town_cross_2160p50" "crowd_run_2160p50" "sintel")
 
